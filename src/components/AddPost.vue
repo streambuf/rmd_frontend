@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="columns is-centered">
-      <div class="column post-editor">
+      <div class="column post-editor content">
         <editor v-show="isEditor"
             autofocus
             ref="editor"
