@@ -49,10 +49,67 @@
     width: 112px;
 }
 
-
-
 .app-menu {
     background-color: #FDFDFD;
     padding: 1.25rem;
     width: 16em;
+}
+
+.post-editor {
+    background-color: #FDFDFD;
+    max-width: 960px;
+    font-size: 1.10em;
+    min-height: 400px;
+}
+
+.post-view {
+    padding: 1em 8em 1em 8em;
+}
+
+.post-editor-save-button-wrapper {
+    display: flex;
+    max-width: 960px;
+    padding: 0px;
+
+}
+
+.post-editor-button {
+    flex: 1;
+    height: 3em;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #363636;
+    font-weight: 600;
+    line-height: 1.125
+}
+
+h2 {
+    @extend h1;
+    font-size: 2.5rem;
+}
+
+h3 {
+    @extend h1;
+    font-size: 2rem;
+}
+
+h4 {
+    @extend h1;
+    font-size: 1.5rem;
+}
+
+h5 {
+@extend h1;
+    font-size: 1.25rem;
+}
+
+h6 {
+@extend h1;
+    font-size: 1rem;
+}
+
+p {
+    margin-bottom: 1em;
 }

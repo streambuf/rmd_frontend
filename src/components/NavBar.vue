@@ -3,9 +3,7 @@
     <div class="navbar-brand">
 
       <router-link class="navbar-item" tag="a" :to="'/'">
-        <!--<a class="navbar-item">-->
           <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-        <!--</a>-->
       </router-link>
 
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -46,6 +44,10 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
+            <router-link :to="'/posts/add'" tag="a" class="button is-primary">
+              <strong>Написать</strong>
+            </router-link>
+
             <a class="button is-primary">
               <strong>Регистрация</strong>
             </a>
