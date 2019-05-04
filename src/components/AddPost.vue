@@ -3,11 +3,17 @@
     <div class="columns is-centered">
       <div class="column post-editor content">
         <editor v-show="isEditor"
-            autofocus
-            ref="editor"
-            @save="onSave"
-            @ready="onReady"
-            @change="onChange"
+                :autofocus="true"
+                ref="editor"
+                @save="onSave"
+                @ready="onReady"
+                @change="onChange"
+                :customTools="tools"
+                :header="true"
+                :list="true"
+                :marker="true"
+                :link="true"
+                :paragraph="true"
         />
         <post-view v-show="!isEditor" :post="post"></post-view>
       </div>
@@ -23,6 +29,7 @@
 
 <script>
     import {Editor} from 'vue-editor-js'
+    import ImageTool from '@editorjs/image';
     import PostView from './PostView'
 
     export default {
@@ -33,7 +40,18 @@
         data() {
             return {
                 post: {},
-                isEditor: true
+                isEditor: true,
+                tools: {
+                    image: {
+                        class: ImageTool,
+                        config: {
+                            endpoints: {
+                                byFile: "http://localhost:8008/uploadFile",
+                                byUrl: "http://localhost:8008/uploadFile"
+                            }
+                        }
+                    }
+                },
             }
         },
         computed: {
