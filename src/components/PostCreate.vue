@@ -111,16 +111,14 @@
           <div class="post-editor-block-image">
             <div class="media-left">
               <div class="post-image">
-                <img
-                    src="https://avatars.mds.yandex.net/get-pdb/1357752/71fa0dd2-267e-406b-a420-651add8faf01/s1200?webp=false"
-                    alt="Image">
+                <img :src="getImageUrl(image)" alt="Image">
               </div>
             </div>
             <div class="media-content">
               <div class="field">
                 <div class="file is-primary">
                   <label class="file-label">
-                    <input class="file-input" type="file" name="resume">
+                    <input @change="uploadImageByFile" class="file-input" type="file" name="resume">
                     <span class="file-cta">
                       <span class="file-icon">
                         <font-awesome-icon icon="upload"/>
@@ -182,6 +180,7 @@
     import {Editor} from 'vue-editor-js'
     import ImageTool from '@editorjs/image';
     import PostView from './PostView'
+    import Vue from 'vue';
 
     export default {
         components: {
@@ -192,13 +191,14 @@
             return {
                 post: {},
                 isEditor: true,
+                image: 'woman.jpg',
                 tools: {
                     image: {
                         class: ImageTool,
                         config: {
                             endpoints: {
-                                byFile: "http://localhost:8008/images/uploadByFile",
-                                byUrl: "http://localhost:8008/images/uploadByUrl"
+                                byFile: "http://localhost:8008/api/v1/images/uploadByFile",
+                                byUrl: "http://localhost:8008/api/v1/images/uploadByUrl"
                             }
                         }
                     }
@@ -232,6 +232,31 @@
                 }
 
                 this.isEditor = !this.isEditor;
+            },
+            getImageUrl(image) {
+                if (image.startsWith('http')) {
+                    return image;
+                } else {
+                    return require('../assets/' + image);
+                }
+            },
+            uploadImageByFile($event) {
+                let file = $event.target.files[0];
+                let formData = new FormData();
+                formData.append('image', file);
+                Vue.http.post('images/uploadByFile',
+                    formData,
+                    {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                ).then(response => {
+                    console.log(response);
+
+                }).catch(response => {
+                    console.log(response);
+                });
             }
         }
     }

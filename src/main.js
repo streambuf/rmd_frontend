@@ -1,6 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
+import VueResource from 'vue-resource';
 import {store} from "./store";
 import Bulma from "bulma";
 import Editor from "vue-editor-js";
@@ -17,6 +18,8 @@ library.add(faEye, faComments, faUser, faThumbsUp, faThumbsDown, faHome, faExter
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Editor);
+Vue.use(VueResource);
+Vue.http.options.root = 'http://localhost:8008/api/v1';
 
 Vue.config.productionTip = false;
 

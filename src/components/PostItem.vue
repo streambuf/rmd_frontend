@@ -1,6 +1,6 @@
 <template>
   <div class="post-list-item">
-    <div class="media-left">
+    <div class="media-left post-media">
       <div class="post-image">
         <img
             src="https://avatars.mds.yandex.net/get-pdb/1357752/71fa0dd2-267e-406b-a420-651add8faf01/s1200?webp=false"

@@ -7,6 +7,10 @@
       Common
  */
 
+.post-media {
+    margin: -1em 0.75em -1em -1em;
+}
+
 .post-image {
     display: flex;
     flex-direction: row;
@@ -18,8 +22,8 @@
     flex: 1;
     margin-right: 1rem;
     overflow: hidden;
-    height: 112px;
-    width: 112px;
+    height: 148px;
+    width: 148px;
 }
 
 /*
