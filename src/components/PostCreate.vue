@@ -4,7 +4,7 @@
       <div class="column post-editor content">
 
 
-        <div class="form-editor">
+        <div class="post-editor-form">
 
           <div class="notification is-warning">
             <button class="delete"></button>
@@ -30,7 +30,7 @@
           <div class="field-body">
 
 
-            <div class="field form-editor-selector">
+            <div class="field post-editor-form-selector">
               <label class="label">Сайт знакомства</label>
               <p class="control has-icons-left ">
               <span class="select ">
@@ -49,7 +49,7 @@
               </p>
             </div>
 
-            <div class="field form-editor-selector">
+            <div class="field post-editor-form-selector">
               <label class="label">Город</label>
               <p class="control has-icons-left">
               <span class="select">
@@ -125,7 +125,7 @@
             Для этого можно использовать ссылку на фото, буфер или <font-awesome-icon icon="plus"/>
           </div>
 
-          <div class="post-list-item">
+          <div class="post-editor-block-image">
             <div class="media-left">
               <div class="post-image">
                 <img
@@ -169,7 +169,7 @@
         </div>
 
 
-        <div class="text-editor">
+        <div class="post-editor-message">
 
 
           <editor v-show="isEditor"
