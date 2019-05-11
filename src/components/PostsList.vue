@@ -1,7 +1,7 @@
 <template>
   <div class="columns is-centered">
     <div class="column post-list">
-      <div class="post-list-item" v-for="item in array">
+      <div v-for="item in array">
         <post-item></post-item>
       </div>
     </div>

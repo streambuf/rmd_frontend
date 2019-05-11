@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import PoststList from './components/PostsList';
-import AddPost from './components/AddPost';
+import AddPost from './components/PostCreate';
 import Error404 from './components/Error404';
 
 Vue.use(Router);
