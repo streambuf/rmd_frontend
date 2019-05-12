@@ -1,7 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import PoststList from './components/PostsList';
-import AddPost from './components/PostCreate';
+import PostCreate from './components/PostCreate';
+import PostView from './components/PostView';
 import Error404 from './components/Error404';
 
 Vue.use(Router);
@@ -14,7 +15,11 @@ const routes = [
     },
     {
         path: '/posts/add',
-        component: AddPost
+        component: PostCreate
+    },
+    {
+        path: '/posts/:id',
+        component: PostView
     },
     {
         path: '*',

@@ -2,42 +2,36 @@
   <div class="post-list-item">
     <div class="media-left post-media">
       <div class="post-image">
-        <img
-            src="https://avatars.mds.yandex.net/get-pdb/1357752/71fa0dd2-267e-406b-a420-651add8faf01/s1200?webp=false"
-            alt="Image">
+        <a :href="postUrl">
+          <img :src="getImageUrl" alt="Image">
+        </a>
       </div>
     </div>
     <div class="media-content">
-      <div class="content">
-        <p>
-          <strong>Марина 24,</strong>
-          <small>с сайта Mamba </small>
+      <div class="post-list-item-content content">
+        <a :href="postUrl">
+          <strong>{{post.name}} {{post.age}}, </strong>
+          <small>с сайта {{post.datingService}} </small>
           <small>
-                        <span class="icon is-small">
-                          <font-awesome-icon icon="home"/>
-                        </span> Москва
+            <span class="icon is-small">
+              <font-awesome-icon icon="home"/>
+            </span> {{post.city}}
           </small>
-          <br>
-          Начала просить денег почти сразу как встрелись. Ну что еще сказать, был полный пиздец, я в ахуе от
-          ее поведения.
-          Начала просить денег почти сразу как встрелись. Ну что еще сказать
-        </p>
+          <div class="post-list-item-content-text">
+            <span v-html="prepareText"></span>
+          </div>
+        </a>
       </div>
       <div class="level is-mobile">
         <div class="level-left post-list-item-footer">
-          <a class="level-item post-list-item-footer-item" aria-label="eye">
-                        <span class="icon is-small">
-                          <font-awesome-icon icon="eye"/> 300
-                        </span>
-          </a>
           <a class="level-item post-list-item-footer-item" aria-label="comments">
                         <span class="icon is-small">
-                          <font-awesome-icon icon="comments"/> 900
+                          <font-awesome-icon icon="comments"/> 0
                         </span>
           </a>
           <a class="level-item post-list-item-footer-item" aria-label="user">
                         <span class="icon is-small">
-                          <font-awesome-icon icon="user"/> Indigo
+                          <font-awesome-icon icon="user"/> {{post.author}}
                         </span>
           </a>
         </div>
@@ -49,7 +43,7 @@
                         </span>
           </a>
           <div class="post-list-item-footer-item-score">
-            +100
+            +1
           </div>
           <a class="level-item post-list-item-footer-item-like" aria-label="user2">
                         <span class="icon is-small">
@@ -65,7 +59,37 @@
 <script>
 
 
-    export default {}
+    export default {
+        props: ['post'],
+        computed: {
+            prepareText() {
+                let blocks = this.post.message.blocks;
+                for (let block of blocks) {
+                    if (block.type === 'paragraph') {
+                        let text = block.data.text;
+                        if (text.length > 180) {
+                            return text.substring(0, 180) + '...';
+                        } else {
+                            return text;
+                        }
+                    }
+                }
+                return "Отзыв содержит только медиа данные без текста";
+            },
+            getImageUrl() { /* todo to common, duplicate in postcreate.vue */
+                if (this.post.image !== null) {
+                    return this.post.image;
+                } else {
+                    let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
+                    return require('../assets/' + imageName);
+                }
+            },
+            postUrl() {
+                return '/posts/' + this.post.id;
+            }
+        }
+
+    }
 </script>
 
 <style scoped>

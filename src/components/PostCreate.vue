@@ -35,6 +35,7 @@
                     <option>Badoo</option>
                     <option>Dating.ru</option>
                     <option>Chpoking.ru</option>
+                    <option>Другое</option>
                   </select>
                 </span>
                 <span class="icon is-small is-left">
@@ -180,7 +181,7 @@
                   :marker="true"
                   :link="true"
                   :paragraph="true"/>
-          <post-view v-show="!isEditor" :post="post.message"></post-view>
+          <!--<post-view v-show="!isEditor" :post="post.message"></post-view>-->
         </div>
       </div>
     </div>

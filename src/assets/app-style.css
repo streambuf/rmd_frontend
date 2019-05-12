@@ -40,11 +40,37 @@
     flex: 0 1 60em;
 }
 
+/*
+    PostItem.vue
+ */
+
 .post-list-item {
     background-color: #FDFDFD;
     padding: 1.5em;
     margin-bottom: 1.5em;
     display: flex;
+}
+
+.post-list-item-content {
+    margin-bottom: 1rem !important;
+}
+
+.post-list-item-content a {
+    color: #4a4a4a;
+    max-height: 148px;
+}
+
+.post-list-item-content a:hover {
+    color: black;
+}
+
+.post-list-item-content-text {
+    padding-top: 0.3em;
+}
+
+.post-image img:hover {
+    -webkit-transform: scale(1.01);
+    transform: scale(1.05);
 }
 
 .post-list-item-footer {
@@ -110,8 +136,23 @@
     PostView.vue
  */
 .post-view {
+    background-color: #FDFDFD;
     text-align: center;
     padding-top: 1em;
+    max-width: 650px;
+    font-size: 1.10em;
+}
+
+.post-view-title {
+    font-size: 2em;
+}
+
+.post-view-bar {
+    background-color: #FDFDFD;
+    text-align: center;
+    padding-top: 1em;
+    max-width: 200px;
+    font-size: 1.10em;
 }
 
 .post-block {
@@ -157,3 +198,5 @@
     margin-bottom: 1.5em;
     display: flex;
 }
+
+

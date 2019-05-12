@@ -1,8 +1,8 @@
 <template>
   <div class="columns is-centered">
     <div class="column post-list">
-      <div v-for="item in array">
-        <post-item></post-item>
+      <div v-for="post in posts">
+        <post-item :post="post"></post-item>
       </div>
     </div>
 
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     import {mapGetters} from 'vuex';
     import PostItem from './PostItem';
 
@@ -43,13 +44,27 @@
         },
         data() {
             return {
-                array: [1, 2, 3, 4, 5, 6, 7, 8]
+                posts: []
             };
         },
         computed: {
             ...mapGetters('user', {
                 userName: 'getName'
             })
+        },
+        methods: {
+            fetchPosts() {
+                Vue.http.get('posts')
+                    .then(response => response.json())
+                    .then(data => {
+                        this.posts = data;
+                    }).catch(response => {
+                    console.log(response);
+                });
+            }
+        },
+        mounted() {
+            this.fetchPosts();
         }
     }
 </script>
