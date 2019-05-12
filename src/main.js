@@ -19,7 +19,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Editor);
 Vue.use(VueResource);
-Vue.http.options.root = 'http://localhost:8008/api/v1';
+Vue.http.options.root = process.env.VUE_APP_HOST;
 
 Vue.config.productionTip = false;
 

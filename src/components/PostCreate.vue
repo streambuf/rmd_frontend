@@ -12,7 +12,7 @@
           <div class="field">
             <label class="label">Ссылка на анкету человека</label>
             <div class="control has-icons-left has-icons-right">
-              <input class="input" type="text" placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
+              <input v-model.trim="post.datingServiceProfileLink" class="input" type="text" placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
               <span class="icon is-small is-left">
                 <font-awesome-icon icon="external-link-alt"/>
               </span>
@@ -24,11 +24,11 @@
           </div>
 
           <div class="field-body">
-            <div class="field post-editor-form-selector">
+            <div class="field">
               <label class="label">Сайт знакомства</label>
               <p class="control has-icons-left ">
                 <span class="select ">
-                  <select>
+                  <select v-model.trim="post.datingService">
                     <option selected>Выберите</option>
                     <option>Mamba</option>
                     <option>Tinder</option>
@@ -43,11 +43,11 @@
               </p>
             </div>
 
-            <div class="field post-editor-form-selector">
+            <div class="field">
               <label class="label">Город</label>
               <p class="control has-icons-left">
                 <span class="select">
-                  <select>
+                  <select v-model.trim="post.city">
                     <option selected>Выберите</option>
                     <option v-for="location in locations">
                       {{location.city}}
@@ -59,13 +59,27 @@
                 </span>
               </p>
             </div>
+
+            <div class="field">
+              <label class="label">Пол</label>
+              <div class="control">
+                <label class="radio">
+                  <input v-model="post.gender" type="radio" value="female">
+                  Женский
+                </label>
+                <label class="radio">
+                  <input v-model="post.gender" type="radio" value="male">
+                  Мужской
+                </label>
+              </div>
+            </div>
           </div>
 
           <div class="field-body">
             <div class="field">
               <label class="label">Имя</label>
               <div class="control has-icons-left has-icons-right">
-                <input class="input" type="text" placeholder="Имя">
+                <input v-model.trim="post.name" class="input" type="text" placeholder="Имя">
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="address-card"/>
                 </span>
@@ -77,10 +91,10 @@
             </div>
 
 
-            <div class="field">
+            <div class="field post-editor-form-age">
               <label class="label">Возраст</label>
               <div class="control has-icons-left has-icons-right">
-                <input class="input" type="number" placeholder="Возраст">
+                <input v-model.trim="post.age" class="input" type="number" placeholder="Возраст">
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="hourglass-half"/>
                 </span>
@@ -90,12 +104,14 @@
               </div>
               <p v-if="false" class="help is-success">message</p>
             </div>
+
+
           </div>
 
           <div class="field">
             <label class="label">Логин пользователя</label>
             <div class="control">
-              <input class="input" type="text" placeholder="От чьего имени пишется отзыв">
+              <input v-model.trim="post.system.author" class="input" type="text" placeholder="От чьего имени пишется отзыв">
             </div>
           </div>
 
@@ -111,7 +127,7 @@
           <div class="post-editor-block-image">
             <div class="media-left">
               <div class="post-image">
-                <img :src="getImageUrl(image)" alt="Image">
+                <img :src="getImageUrl" alt="Image">
               </div>
             </div>
             <div class="media-content">
@@ -131,16 +147,19 @@
                 </div>
               </div>
 
-              <div class="field">
-                <label class="label">или загрузить фото по ссылке</label>
+              <label class="label">или загрузить фото по ссылке</label>
+              <div class="field has-addons">
                 <div class="control has-icons-left has-icons-right">
-                  <input class="input" type="text" placeholder="Ссылка на фото">
+                  <input v-model.trim="urlImage" class="input" type="text" placeholder="Ссылка на фото">
                   <span class="icon is-small is-left">
                     <font-awesome-icon icon="file-image"/>
                   </span>
                   <span class="icon is-small is-right">
                     <font-awesome-icon icon="check"/>
                   </span>
+                </div>
+                <div class="control">
+                  <a @click="uploadImageByUrl" class="button is-info">Загрузить по ссылке</a>
                 </div>
                 <p v-if="false" class="help is-success">messae</p>
               </div>
@@ -161,7 +180,7 @@
                   :marker="true"
                   :link="true"
                   :paragraph="true"/>
-          <post-view v-show="!isEditor" :post="post"></post-view>
+          <post-view v-show="!isEditor" :post="post.message"></post-view>
         </div>
       </div>
     </div>
@@ -189,16 +208,28 @@
         },
         data() {
             return {
-                post: {},
+                post: {
+                    datingService: '',
+                    datingServiceProfileLink: '',
+                    city: '',
+                    name: '',
+                    age: null,
+                    gender: 'female',
+                    image: null,
+                    message: {},
+                    system: {
+                        author: ''
+                    }
+                },
+                urlImage: '',
                 isEditor: true,
-                image: 'woman.jpg',
                 tools: {
                     image: {
                         class: ImageTool,
                         config: {
                             endpoints: {
-                                byFile: "http://localhost:8008/api/v1/images/uploadByFile",
-                                byUrl: "http://localhost:8008/api/v1/images/uploadByUrl"
+                                byFile: process.env.VUE_APP_HOST + "/images/uploadByFile",
+                                byUrl: process.env.VUE_APP_HOST + "/images/uploadByUrl"
                             }
                         }
                     }
@@ -211,35 +242,42 @@
             }),
             viewButton() {
                 return this.isEditor ? 'Предпросмотр' : 'Продолжить редактирование';
-            }
+            },
+            getImageUrl() {
+                if (this.post.image !== null) {
+                    return this.post.image;
+                } else {
+                    let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
+                    return require('../assets/' + imageName);
+                }
+            },
         },
         methods: {
             createPost() {
-                this.$refs.editor.save();
+                let postRequest = JSON.stringify(this.post);
+                Vue.http.post('posts', postRequest)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                    }).catch(response => {
+                    console.log(response);
+                });
             },
             onSave(response) {
-                console.log(JSON.stringify(response));
-                this.post = response;
+                this.post.message = response;
             },
             onReady(e) {
             },
             onChange(e) {
-
+                this.$refs.editor.save();
             },
             toggleViewEditor() {
                 if (this.isEditor) {
                     this.$refs.editor.save();
                 }
-
                 this.isEditor = !this.isEditor;
             },
-            getImageUrl(image) {
-                if (image.startsWith('http')) {
-                    return image;
-                } else {
-                    return require('../assets/' + image);
-                }
-            },
+
             uploadImageByFile($event) {
                 let file = $event.target.files[0];
                 let formData = new FormData();
@@ -251,10 +289,22 @@
                             'Content-Type': 'multipart/form-data'
                         }
                     }
-                ).then(response => {
+                )
+                    .then(response => response.json())
+                    .then(data => {
+                      this.post.image = data.file.url;
+                    }).catch(response => {
                     console.log(response);
+                });
+            },
 
-                }).catch(response => {
+            uploadImageByUrl() {
+                let request = JSON.stringify({url: this.urlImage});
+                Vue.http.post('images/uploadByUrl', request)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.post.image = data.file.url;
+                    }).catch(response => {
                     console.log(response);
                 });
             }
