@@ -26,13 +26,15 @@
         <div class="level-left post-list-item-footer">
           <a class="level-item post-list-item-footer-item" aria-label="comments">
                         <span class="icon is-small">
-                          <font-awesome-icon icon="comments"/> 0
+                          <font-awesome-icon icon="comments"/>
                         </span>
+            &nbsp; 0
           </a>
           <a class="level-item post-list-item-footer-item" aria-label="user">
                         <span class="icon is-small">
-                          <font-awesome-icon icon="user"/> {{post.author}}
+                          <font-awesome-icon icon="user"/>
                         </span>
+            &nbsp;{{post.author}}
           </a>
         </div>
 
