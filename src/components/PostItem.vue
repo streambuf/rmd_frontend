@@ -7,7 +7,7 @@
         </a>
       </div>
     </div>
-    <div class="media-content">
+    <div class="media-content post-list-item-media">
       <div class="post-list-item-content content">
         <a :href="postUrl">
           <strong>{{post.name}} {{post.age}}, </strong>
@@ -69,8 +69,8 @@
                 for (let block of blocks) {
                     if (block.type === 'paragraph') {
                         let text = block.data.text;
-                        if (text.length > 180) {
-                            return text.substring(0, 180) + '...';
+                        if (text.length > 230) {
+                            return text.substring(0, 230) + '...';
                         } else {
                             return text;
                         }

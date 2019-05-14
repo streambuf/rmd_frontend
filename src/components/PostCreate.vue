@@ -169,8 +169,7 @@
         </div>
 
         <div class="post-editor-message">
-          <editor v-show="isEditor"
-                  :autofocus="false"
+          <editor :autofocus="false"
                   ref="editor"
                   @save="onSave"
                   @ready="onReady"
@@ -181,14 +180,12 @@
                   :marker="true"
                   :link="true"
                   :paragraph="true"/>
-          <!--<post-view v-show="!isEditor" :post="post.message"></post-view>-->
         </div>
       </div>
     </div>
 
     <div class="columns is-centered">
       <div class="column post-editor-save-button-wrapper buttons has-addons">
-        <button @click="toggleViewEditor" class="button is-info post-editor-button">{{viewButton}}</button>
         <button @click="createPost" class="button is-primary post-editor-button">Опубликовать</button>
       </div>
     </div>
@@ -223,7 +220,6 @@
                     }
                 },
                 urlImage: '',
-                isEditor: true,
                 tools: {
                     image: {
                         class: ImageTool,
@@ -260,6 +256,7 @@
                     .then(response => response.json())
                     .then(data => {
                         console.log(data);
+                        this.$router.push("/posts/" + data.id)
                     }).catch(response => {
                     console.log(response);
                 });
@@ -272,13 +269,6 @@
             onChange(e) {
                 this.$refs.editor.save();
             },
-            toggleViewEditor() {
-                if (this.isEditor) {
-                    this.$refs.editor.save();
-                }
-                this.isEditor = !this.isEditor;
-            },
-
             uploadImageByFile($event) {
                 let file = $event.target.files[0];
                 let formData = new FormData();
