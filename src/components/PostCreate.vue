@@ -105,7 +105,7 @@
           <div class="field">
             <label class="label">Логин пользователя</label>
             <div class="control">
-              <input v-model.trim="post.system.author" class="input" type="text" placeholder="От чьего имени пишется отзыв">
+              <input @input="validateLogin($event)" v-model.trim="post.system.author" class="input" type="text" placeholder="От чьего имени пишется отзыв" pattern="[A-Za-z]*">
             </div>
           </div>
 
@@ -444,6 +444,11 @@
 
             validateDatingService() {
                 this.inputStatusValid.datingService = this.post.datingService !== this.defaultSelectOption;
+            },
+
+            validateLogin(e) {
+                this.post.system.author = this.post.system.author.replace(/[^a-z]+/, '');
+
             },
 
             capitalizeFirstLetter(string) {
