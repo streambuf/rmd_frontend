@@ -9,11 +9,11 @@ import appstyles from './assets/app-style.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faEye, faComments, faUser, faThumbsUp, faThumbsDown, faHome, faExternalLinkAlt, faVenusMars, faGlobe,
-faAddressCard, faHourglassHalf, faCheck, faUpload, faPlus, faFileImage} from '@fortawesome/free-solid-svg-icons'
+faAddressCard, faHourglassHalf, faCheck, faUpload, faPlus, faFileImage, faCheckCircle, faExclamationCircle} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faEye, faComments, faUser, faThumbsUp, faThumbsDown, faHome, faExternalLinkAlt, faVenusMars, faGlobe,
-    faAddressCard, faHourglassHalf, faCheck, faUpload, faPlus, faFileImage);
+    faAddressCard, faHourglassHalf, faCheck, faUpload, faPlus, faFileImage, faCheckCircle, faExclamationCircle);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

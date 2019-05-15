@@ -156,6 +156,18 @@
     border-color: #b5b5b5;
 }
 
+.post-editor-form-input-error {
+    color: #b42f00 !important;
+}
+
+.post-editor-form-input-success {
+    color: #12b400 !important;
+}
+
+.post-editor-form-input-default {
+    color: #b4b0b1 !important;
+}
+
 
 /*
     PostView.vue

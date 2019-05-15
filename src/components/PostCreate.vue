@@ -3,33 +3,32 @@
     <div class="columns is-centered">
       <div class="column post-editor content">
         <div class="post-editor-form">
-          <div class="notification is-warning">
-            <button class="delete"></button>
-            Все поля являются <strong>необязательными</strong> для заполнения, однако они помогут другим найти ваш
-            отзыв.
-          </div>
+
 
           <div class="field">
-            <label class="label">Ссылка на анкету человека</label>
-            <div class="control has-icons-left has-icons-right">
-              <input v-model.trim="post.datingServiceProfileLink" class="input" type="text" placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
+            <label class="label">Ссылка на анкету человека <font-awesome-icon :class="checkClassLink" :icon="checkIconLink"/></label>
+            <div class="control has-icons-left">
+              <input @input="validateLink" v-model.trim="post.datingServiceProfileLink" class="input" type="text" placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
               <span class="icon is-small is-left">
                 <font-awesome-icon icon="external-link-alt"/>
               </span>
-              <span class="icon is-small is-right">
-                <font-awesome-icon icon="check"/>
-              </span>
             </div>
-            <p v-if="false" class="help is-success">messae</p>
+            <p v-if="true" class="help is-info">Необязательное поле (должна начинаться с http или https)</p>
+          </div>
+
+          <div class="notification is-warning">
+            <button class="delete"></button>
+            Все нижеперечисленные поля <strong>обязательны</strong> для заполнения, они помогут другим найти ваш
+            отзыв.
           </div>
 
           <div class="field-body">
             <div class="field">
-              <label class="label">Сайт знакомства</label>
+              <label class="label">Сайт знакомства <font-awesome-icon :class="checkClassDatingService" :icon="checkIconDatingService"/></label>
               <p class="control has-icons-left ">
                 <span class="select ">
-                  <select v-model.trim="post.datingService">
-                    <option selected>Выберите</option>
+                  <select @change="validateDatingService" v-model.trim="post.datingService">
+                    <option selected>{{defaultSelectOption}}</option>
                     <option>Mamba</option>
                     <option>Tinder</option>
                     <option>Badoo</option>
@@ -45,11 +44,11 @@
             </div>
 
             <div class="field">
-              <label class="label">Город</label>
+              <label class="label">Город <font-awesome-icon :class="checkClassCity" :icon="checkIconCity"/></label>
               <p class="control has-icons-left">
                 <span class="select">
-                  <select v-model.trim="post.city">
-                    <option selected>Выберите</option>
+                  <select @change="validateCity" v-model.trim="post.city">
+                    <option selected>{{defaultSelectOption}}</option>
                     <option v-for="location in locations">
                       {{location.city}}
                     </option>
@@ -78,32 +77,26 @@
 
           <div class="field-body">
             <div class="field">
-              <label class="label">Имя</label>
-              <div class="control has-icons-left has-icons-right">
-                <input v-model.trim="post.name" class="input" type="text" placeholder="Имя">
+              <label class="label">Имя <font-awesome-icon :class="checkClassName" :icon="checkIconName"/></label>
+              <div class="control has-icons-left">
+                <input @input="validateName" v-model.trim="post.name" class="input" type="text" placeholder="Имя">
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="address-card"/>
                 </span>
-                <span class="icon is-small is-right">
-                  <font-awesome-icon icon="check"/>
-                </span>
               </div>
-              <p v-if="false" class="help is-success">message</p>
+              <p class="help is-info">От 2 до 50 символов</p>
             </div>
 
 
             <div class="field post-editor-form-age">
-              <label class="label">Возраст</label>
-              <div class="control has-icons-left has-icons-right">
-                <input v-model.trim="post.age" class="input" type="number" placeholder="Возраст">
+              <label class="label">Возраст <font-awesome-icon :class="checkClassAge" :icon="checkIconAge"/></label>
+              <div class="control has-icons-left">
+                <input @input="validateAge" v-model.trim="post.age" class="input" type="number" placeholder="Возраст">
                 <span class="icon is-small is-left">
                   <font-awesome-icon icon="hourglass-half"/>
                 </span>
-                <span class="icon is-small is-right">
-                  <font-awesome-icon icon="check"/>
-                </span>
               </div>
-              <p v-if="false" class="help is-success">message</p>
+              <p class="help is-info">От 16 до 80 лет</p>
             </div>
 
 
@@ -168,9 +161,14 @@
           </div>
         </div>
 
-        <div class="post-editor-message">
+
+        <div class="field">
+          <label class="label">Текстовый редактор <font-awesome-icon :class="checkClassMessage" :icon="checkIconMessage"/></label>
+        </div>
+        <div v-if="isCreateMode || post.system.loaded" class="post-editor-message">
           <editor :autofocus="false"
                   ref="editor"
+                  :init-data="post.message"
                   @save="onSave"
                   @ready="onReady"
                   @change="onChange"
@@ -186,7 +184,7 @@
 
     <div class="columns is-centered">
       <div class="column post-editor-save-button-wrapper buttons has-addons">
-        <button @click="createPost" class="button is-primary post-editor-button">Опубликовать</button>
+        <button @click="savePost" class="button is-primary post-editor-button" :disabled="!isValidFilled">{{saveButtonName}}</button>
       </div>
     </div>
   </div>
@@ -206,11 +204,12 @@
         },
         data() {
             return {
+                defaultSelectOption: 'Выберите',
                 post: {
-                    datingService: '',
-                    datingServiceProfileLink: '',
-                    city: '',
-                    name: '',
+                    datingService: 'Выберите',
+                    datingServiceProfileLink: null,
+                    city: 'Выберите',
+                    name: null,
                     age: null,
                     gender: 'female',
                     image: null,
@@ -231,25 +230,99 @@
                         }
                     }
                 },
+                inputStatusValid: {
+                    age: null,
+                    name: null,
+                    city: null,
+                    datingService: null,
+                    message: null,
+                },
+                validDatingServiceProfileLink: null,
             }
         },
         computed: {
             ...mapGetters('locations', {
                 locations: 'getLocations'
             }),
-            viewButton() {
-                return this.isEditor ? 'Предпросмотр' : 'Продолжить редактирование';
+            postId() {
+                return this.$route.params.id;
+            },
+            isCreateMode() {
+                return this.$route.params.id === undefined;
+            },
+            saveButtonName() {
+                if (!this.isValidFilled) {
+                    return 'Корректно заполните обязательные поля'
+                }
+                return this.isCreateMode ? 'Опубликовать' : 'Сохранить изменения';
             },
             getImageUrl() {
-                if (this.post.image !== null) {
+                if (!!this.post.image) {
                     return this.post.image;
                 } else {
                     let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
                     return require('../assets/' + imageName);
                 }
             },
+            isValidFilled() {
+                for (let prop in this.inputStatusValid) {
+                    if (!this.inputStatusValid[prop]) return false;
+                }
+                return true;
+            },
+            checkClassAge() {
+                return this.getCheckClass(this.inputStatusValid.age);
+            },
+            checkIconAge() {
+                return this.getCheckIcon(this.inputStatusValid.age);
+            },
+            checkClassName() {
+                return this.getCheckClass(this.inputStatusValid.name);
+            },
+            checkIconName() {
+                return this.getCheckIcon(this.inputStatusValid.name);
+            },
+            checkClassLink() {
+                return this.getCheckClass(this.validDatingServiceProfileLink);
+            },
+            checkIconLink() {
+                return this.getCheckIcon(this.validDatingServiceProfileLink);
+            },
+            checkClassCity() {
+                return this.getCheckClass(this.inputStatusValid.city);
+            },
+            checkIconCity() {
+                return this.getCheckIcon(this.inputStatusValid.city);
+            },
+            checkClassDatingService() {
+                return this.getCheckClass(this.inputStatusValid.datingService);
+            },
+            checkIconDatingService() {
+                return this.getCheckIcon(this.inputStatusValid.datingService);
+            },
+            checkClassMessage() {
+                return this.getCheckClass(this.inputStatusValid.message);
+            },
+            checkIconMessage() {
+                return this.getCheckIcon(this.inputStatusValid.message);
+            }
+        },
+        mounted() {
+            if (this.postId !== undefined) {
+                this.fetchPost();
+            }
         },
         methods: {
+            savePost() {
+                if (!this.isValidFilled) {
+                    return;
+                }
+                if (this.isCreateMode) {
+                    this.createPost();
+                } else {
+                    this.updatePost();
+                }
+            },
             createPost() {
                 let postRequest = JSON.stringify(this.post);
                 Vue.http.post('posts', postRequest)
@@ -261,13 +334,49 @@
                     console.log(response);
                 });
             },
+            updatePost() {
+                let postRequest = JSON.stringify(this.post);
+                Vue.http.post('posts/' + this.postId, postRequest)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        this.$router.push("/posts/" + data.id)
+                    }).catch(response => {
+                    console.log(response);
+                });
+            },
             onSave(response) {
                 this.post.message = response;
+
+                this.inputStatusValid.message = false;
+
+                for (let block of response.blocks) {
+                    if (block.type === 'paragraph' && block.data.text.trim().length > 0) {
+                        this.inputStatusValid.message = true;
+                        break;
+                    }
+                }
             },
             onReady(e) {
             },
             onChange(e) {
                 this.$refs.editor.save();
+            },
+            fetchPost() {
+                Vue.http.get('posts/' + this.postId)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.post = data;
+                        this.post['system'] = {author: this.post.author, loaded: true};
+                        this.validateDatingService();
+                        this.validateCity();
+                        this.validateName();
+                        this.validateAge();
+                        this.validateLink();
+                        this.onSave(data.message);
+                    }).catch(response => {
+                    console.log(response);
+                });
             },
             uploadImageByFile($event) {
                 let file = $event.target.files[0];
@@ -298,7 +407,50 @@
                     }).catch(response => {
                     console.log(response);
                 });
+            },
+
+            getCheckClass(isValid) {
+                if (isValid === null) {
+                    return 'post-editor-form-input-default';
+                }
+                return isValid ? 'post-editor-form-input-success' : 'post-editor-form-input-error';
+            },
+            getCheckIcon(isValid) {
+                return isValid || isValid === null ? 'check-circle' : 'exclamation-circle';
+            },
+
+            validateAge() {
+                this.inputStatusValid.age = !(this.post.age < 16 || this.post.age > 80);
+            },
+
+            validateName() {
+                this.post.name = this.capitalizeFirstLetter(this.post.name);
+                this.inputStatusValid.name = !(this.post.name.length < 2 || this.post.name.length > 50);
+            },
+
+            validateLink() {
+                let pattern = new RegExp('^(https?:\\/\\/)'+ // protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                this.validDatingServiceProfileLink = !!pattern.test(this.post.datingServiceProfileLink);
+            },
+
+            validateCity() {
+                this.inputStatusValid.city = this.post.city !== this.defaultSelectOption;
+            },
+
+            validateDatingService() {
+                this.inputStatusValid.datingService = this.post.datingService !== this.defaultSelectOption;
+            },
+
+            capitalizeFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
             }
+
+
         }
     }
 </script>

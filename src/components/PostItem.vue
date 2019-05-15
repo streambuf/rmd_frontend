@@ -79,7 +79,7 @@
                 return "Отзыв содержит только медиа данные без текста";
             },
             getImageUrl() { /* todo to common, duplicate in postcreate.vue */
-                if (this.post.image !== null) {
+                if (!!this.post.image) {
                     return this.post.image;
                 } else {
                     let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';

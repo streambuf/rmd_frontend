@@ -18,6 +18,10 @@ const routes = [
         component: PostCreate
     },
     {
+        path: '/posts/edit/:id',
+        component: PostCreate
+    },
+    {
         path: '/posts/:id',
         component: PostView
     },

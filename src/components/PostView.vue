@@ -40,7 +40,7 @@
           </div>
           <footer class="card-footer">
             <!--<a href="#" class="card-footer-item">Сохранить</a>-->
-            <a href="#" class="card-footer-item">Редактировать</a>
+            <a @click.stop.prevent="goToEditing" href="#" class="card-footer-item">Редактировать</a>
             <a href="#" class="card-footer-item">Удалить</a>
           </footer>
         </div>
@@ -86,7 +86,6 @@
     import Vue from 'vue';
 
     export default {
-        // props: ['post'],
         data() {
             return {
                 post: {}
@@ -104,7 +103,7 @@
                 }
             },
             getImageUrl() {
-                if (this.post.image !== null) {
+                if (!!this.post.image) {
                     return this.post.image;
                 } else {
                     let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
@@ -139,6 +138,9 @@
                     }).catch(response => {
                     console.log(response);
                 });
+            },
+            goToEditing() {
+                this.$router.push("/posts/edit/" + this.post.id);
             }
         },
         created() {
