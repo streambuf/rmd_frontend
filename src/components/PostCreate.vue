@@ -237,7 +237,7 @@
                     datingService: null,
                     message: null,
                 },
-                validDatingServiceProfileLink: null,
+                validDatingServiceProfileLink: true,
             }
         },
         computed: {
@@ -267,6 +267,9 @@
             isValidFilled() {
                 for (let prop in this.inputStatusValid) {
                     if (!this.inputStatusValid[prop]) return false;
+                }
+                if (this.validDatingServiceProfileLink === false) {
+                    return false;
                 }
                 return true;
             },
@@ -429,6 +432,10 @@
             },
 
             validateLink() {
+                if (this.post.datingServiceProfileLink.trim().length === 0) {
+                    this.validDatingServiceProfileLink = true;
+                    return;
+                }
                 let pattern = new RegExp('^(https?:\\/\\/)'+ // protocol
                     '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
                     '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
