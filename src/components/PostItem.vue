@@ -60,11 +60,11 @@
 
 <script>
 
-    import {showImageMixin} from '../mixins/showImageMixin'
+    import {CommonPostMixin} from '../mixins/CommonPostMixin'
 
     export default {
         props: ['post'],
-        mixins: [showImageMixin],
+        mixins: [CommonPostMixin],
         computed: {
             prepareText() {
                 let blocks = this.post.message.blocks;

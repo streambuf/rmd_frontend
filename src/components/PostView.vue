@@ -83,11 +83,11 @@
 
 <script>
 
-    import Vue from 'vue';
-    import {showImageMixin} from '../mixins/showImageMixin'
+    import {CommonPostMixin} from '../mixins/CommonPostMixin';
+    import {PostRepository} from '../mixins/repository/PostRepository';
 
     export default {
-        mixins: [showImageMixin],
+        mixins: [CommonPostMixin, PostRepository],
         data() {
             return {
                 post: {}
@@ -125,13 +125,7 @@
                 }
             },
             fetchPost() {
-                Vue.http.get('posts/' + this.postId)
-                    .then(response => response.json())
-                    .then(data => {
-                        this.post = data;
-                    }).catch(response => {
-                    console.log(response);
-                });
+                this.apiFetchPost(this.postId, data => this.post = data);
             },
             goToEditing() {
                 this.$router.push("/posts/edit/" + this.post.id);

@@ -34,14 +34,15 @@
 </template>
 
 <script>
-    import Vue from 'vue';
     import {mapGetters} from 'vuex';
     import PostItem from './PostItem';
+    import {PostRepository} from '../mixins/repository/PostRepository';
 
     export default {
         components: {
             PostItem
         },
+        mixins: [PostRepository],
         data() {
             return {
                 posts: []
@@ -54,15 +55,9 @@
         },
         methods: {
             fetchPosts() {
-                Vue.http.get('posts')
-                    .then(response => response.json())
-                    .then(data => {
-                        this.posts = data;
-                    }).catch(response => {
-                    console.log(response);
-                });
+                this.apiFetchPosts(data => this.posts = data);
             }
-        },
+    },
         mounted() {
             this.fetchPosts();
         }

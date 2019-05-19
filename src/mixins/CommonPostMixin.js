@@ -1,4 +1,4 @@
-export const showImageMixin = {
+export const CommonPostMixin = {
     computed: {
         getImageUrl() {
             if (!!this.post.image) {

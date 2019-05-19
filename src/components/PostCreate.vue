@@ -6,9 +6,12 @@
 
 
           <div class="field">
-            <label class="label">Ссылка на анкету человека <font-awesome-icon :class="checkClassLink" :icon="checkIconLink"/></label>
+            <label class="label">Ссылка на анкету человека
+              <font-awesome-icon :class="checkClassLink" :icon="checkIconLink"/>
+            </label>
             <div class="control has-icons-left">
-              <input @input="validateLink" v-model.trim="post.datingServiceProfileLink" class="input" type="text" placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
+              <input @input="validateLink" v-model.trim="post.datingServiceProfileLink" class="input" type="text"
+                     placeholder="Ссылка на анкету человека о котором хотите написать отзыв">
               <span class="icon is-small is-left">
                 <font-awesome-icon icon="external-link-alt"/>
               </span>
@@ -24,7 +27,9 @@
 
           <div class="field-body">
             <div class="field">
-              <label class="label">Сайт знакомства <font-awesome-icon :class="checkClassDatingService" :icon="checkIconDatingService"/></label>
+              <label class="label">Сайт знакомства
+                <font-awesome-icon :class="checkClassDatingService" :icon="checkIconDatingService"/>
+              </label>
               <p class="control has-icons-left ">
                 <span class="select ">
                   <select @change="validateDatingService" v-model.trim="post.datingService">
@@ -44,7 +49,9 @@
             </div>
 
             <div class="field">
-              <label class="label">Город <font-awesome-icon :class="checkClassCity" :icon="checkIconCity"/></label>
+              <label class="label">Город
+                <font-awesome-icon :class="checkClassCity" :icon="checkIconCity"/>
+              </label>
               <p class="control has-icons-left">
                 <span class="select">
                   <select @change="validateCity" v-model.trim="post.city">
@@ -77,7 +84,9 @@
 
           <div class="field-body">
             <div class="field">
-              <label class="label">Имя <font-awesome-icon :class="checkClassName" :icon="checkIconName"/></label>
+              <label class="label">Имя
+                <font-awesome-icon :class="checkClassName" :icon="checkIconName"/>
+              </label>
               <div class="control has-icons-left">
                 <input @input="validateName" v-model.trim="post.name" class="input" type="text" placeholder="Имя">
                 <span class="icon is-small is-left">
@@ -89,7 +98,9 @@
 
 
             <div class="field post-editor-form-age">
-              <label class="label">Возраст <font-awesome-icon :class="checkClassAge" :icon="checkIconAge"/></label>
+              <label class="label">Возраст
+                <font-awesome-icon :class="checkClassAge" :icon="checkIconAge"/>
+              </label>
               <div class="control has-icons-left">
                 <input @input="validateAge" v-model.trim="post.age" class="input" type="number" placeholder="Возраст">
                 <span class="icon is-small is-left">
@@ -98,14 +109,13 @@
               </div>
               <p class="help is-info">От 16 до 80 лет</p>
             </div>
-
-
           </div>
 
           <div class="field">
             <label class="label">Логин пользователя</label>
             <div class="control">
-              <input @input="validateLogin($event)" v-model.trim="post.system.author" class="input" type="text" placeholder="От чьего имени пишется отзыв" pattern="[A-Za-z]*">
+              <input @input="validateLogin($event)" v-model.trim="post.system.author" class="input" type="text"
+                     placeholder="От чьего имени пишется отзыв" pattern="[A-Za-z]*">
             </div>
           </div>
 
@@ -163,14 +173,15 @@
 
 
         <div class="field">
-          <label class="label">Текстовый редактор <font-awesome-icon :class="checkClassMessage" :icon="checkIconMessage"/></label>
+          <label class="label">Текстовый редактор
+            <font-awesome-icon :class="checkClassMessage" :icon="checkIconMessage"/>
+          </label>
         </div>
         <div v-if="isCreateMode || post.system.loaded" class="post-editor-message">
           <editor :autofocus="false"
                   ref="editor"
                   :init-data="post.message"
                   @save="onSave"
-                  @ready="onReady"
                   @change="onChange"
                   :customTools="tools"
                   :header="true"
@@ -184,7 +195,9 @@
 
     <div class="columns is-centered">
       <div class="column post-editor-save-button-wrapper buttons has-addons">
-        <button @click="savePost" class="button is-primary post-editor-button" :disabled="!isValidFilled">{{saveButtonName}}</button>
+        <button @click="savePost" class="button is-primary post-editor-button" :disabled="!isValidFilled">
+          {{saveButtonName}}
+        </button>
       </div>
     </div>
   </div>
@@ -192,10 +205,12 @@
 
 <script>
     import {mapGetters} from 'vuex';
-    import {Editor} from 'vue-editor-js'
-    import {showImageMixin} from '../mixins/showImageMixin'
+    import {Editor} from 'vue-editor-js';
+    import {CommonPostMixin} from '../mixins/CommonPostMixin';
+    import {PostRepository} from '../mixins/repository/PostRepository';
+    import {ImageRepository} from '../mixins/repository/ImageRepository';
     import ImageTool from '@editorjs/image';
-    import PostView from './PostView'
+    import PostView from './PostView';
     import Vue from 'vue';
 
 
@@ -204,7 +219,7 @@
             Editor,
             PostView
         },
-        mixins: [showImageMixin],
+        mixins: [CommonPostMixin, PostRepository, ImageRepository],
         data() {
             return {
                 defaultSelectOption: 'Выберите',
@@ -263,10 +278,8 @@
                 for (let prop in this.inputStatusValid) {
                     if (!this.inputStatusValid[prop]) return false;
                 }
-                if (this.validDatingServiceProfileLink === false) {
-                    return false;
-                }
-                return true;
+                return this.validDatingServiceProfileLink !== false;
+
             },
             checkClassAge() {
                 return this.getCheckClass(this.inputStatusValid.age);
@@ -322,25 +335,13 @@
                 }
             },
             createPost() {
-                let postRequest = JSON.stringify(this.post);
-                Vue.http.post('posts', postRequest)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        this.$router.push("/posts/" + data.id)
-                    }).catch(response => {
-                    console.log(response);
+                this.apiCreatePost(this.post, data => {
+                    this.$router.push("/posts/" + data.id);
                 });
             },
             updatePost() {
-                let postRequest = JSON.stringify(this.post);
-                Vue.http.post('posts/' + this.postId, postRequest)
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        this.$router.push("/posts/" + data.id)
-                    }).catch(response => {
-                    console.log(response);
+                this.apiUpdatePost(this.post, data => {
+                    this.$router.push("/posts/" + data.id);
                 });
             },
             onSave(response) {
@@ -355,56 +356,31 @@
                     }
                 }
             },
-            onReady(e) {
-            },
+
             onChange(e) {
                 this.$refs.editor.save();
             },
+
             fetchPost() {
-                Vue.http.get('posts/' + this.postId)
-                    .then(response => response.json())
-                    .then(data => {
-                        this.post = data;
-                        this.post['system'] = {author: this.post.author, loaded: true};
-                        this.validateDatingService();
-                        this.validateCity();
-                        this.validateName();
-                        this.validateAge();
-                        this.validateLink();
-                        this.onSave(data.message);
-                    }).catch(response => {
-                    console.log(response);
-                });
-            },
-            uploadImageByFile($event) {
-                let file = $event.target.files[0];
-                let formData = new FormData();
-                formData.append('image', file);
-                Vue.http.post('images/uploadByFile',
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    }
-                )
-                    .then(response => response.json())
-                    .then(data => {
-                      this.post.image = data.file.url;
-                    }).catch(response => {
-                    console.log(response);
+                this.apiFetchPost(this.postId, data => {
+                    this.post = data;
+                    this.post['system'] = {author: this.post.author, loaded: true};
+                    this.validateDatingService();
+                    this.validateCity();
+                    this.validateName();
+                    this.validateAge();
+                    this.validateLink();
+                    this.onSave(data.message);
                 });
             },
 
+            uploadImageByFile($event) {
+                let file = $event.target.files[0];
+                this.apiUploadImageByFile($event.target.files[0], data => this.post.image = data.file.url);
+            },
+
             uploadImageByUrl() {
-                let request = JSON.stringify({url: this.urlImage});
-                Vue.http.post('images/uploadByUrl', request)
-                    .then(response => response.json())
-                    .then(data => {
-                        this.post.image = data.file.url;
-                    }).catch(response => {
-                    console.log(response);
-                });
+                this.apiUploadImageByUrl(this.urlImage, data => this.post.image = data.file.url);
             },
 
             getCheckClass(isValid) {
@@ -431,12 +407,12 @@
                     this.validDatingServiceProfileLink = true;
                     return;
                 }
-                let pattern = new RegExp('^(https?:\\/\\/)'+ // protocol
-                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-                    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-                    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-                    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+                let pattern = new RegExp('^(https?:\\/\\/)' + // protocol
+                    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+                    '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+                    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+                    '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+                    '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
                 this.validDatingServiceProfileLink = !!pattern.test(this.post.datingServiceProfileLink);
             },
 
@@ -456,8 +432,6 @@
             capitalizeFirstLetter(string) {
                 return string.charAt(0).toUpperCase() + string.slice(1);
             }
-
-
         }
     }
 </script>
