@@ -23,7 +23,7 @@
           <div class="card-image">
             <figure class="image is-1by1">
               <div class="post-view-image">
-                <img :src="getImageUrl" alt="Image" />
+                <img v-if="post.id" :src="getImageUrl" alt="Image" />
               </div>
             </figure>
           </div>
