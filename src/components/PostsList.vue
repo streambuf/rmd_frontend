@@ -34,36 +34,34 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex';
-    import PostItem from './PostItem';
-    import {PostRepository} from '../mixins/repository/PostRepository';
+import { mapGetters } from "vuex";
+import PostItem from "./PostItem";
+import { PostRepository } from "../mixins/repository/PostRepository";
 
-    export default {
-        components: {
-            PostItem
-        },
-        mixins: [PostRepository],
-        data() {
-            return {
-                posts: []
-            };
-        },
-        computed: {
-            ...mapGetters('user', {
-                userName: 'getName'
-            })
-        },
-        methods: {
-            fetchPosts() {
-                this.apiFetchPosts(data => this.posts = data);
-            }
-    },
-        mounted() {
-            this.fetchPosts();
-        }
+export default {
+  components: {
+    PostItem
+  },
+  mixins: [PostRepository],
+  data() {
+    return {
+      posts: []
+    };
+  },
+  computed: {
+    ...mapGetters("user", {
+      userName: "getName"
+    })
+  },
+  methods: {
+    fetchPosts() {
+      this.apiFetchPosts(data => (this.posts = data));
     }
+  },
+  mounted() {
+    this.fetchPosts();
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
