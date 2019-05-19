@@ -211,8 +211,6 @@
     import {ImageRepository} from '../mixins/repository/ImageRepository';
     import ImageTool from '@editorjs/image';
     import PostView from './PostView';
-    import Vue from 'vue';
-
 
     export default {
         components: {
@@ -425,7 +423,7 @@
             },
 
             validateLogin(e) {
-                this.post.system.author = this.post.system.author.replace(/[^a-z]+/, '');
+                this.post.system.author = this.post.system.author.replace(/[^a-z0-9]+/, '');
 
             },
 
