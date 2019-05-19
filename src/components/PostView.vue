@@ -84,8 +84,10 @@
 <script>
 
     import Vue from 'vue';
+    import {showImageMixin} from '../mixins/showImageMixin'
 
     export default {
+        mixins: [showImageMixin],
         data() {
             return {
                 post: {}
@@ -100,14 +102,6 @@
                     return []
                 } else {
                     return this.post.message.blocks;
-                }
-            },
-            getImageUrl() {
-                if (!!this.post.image) {
-                    return this.post.image;
-                } else {
-                    let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
-                    return require('../assets/' + imageName);
                 }
             }
         },

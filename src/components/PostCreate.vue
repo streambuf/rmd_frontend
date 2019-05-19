@@ -193,15 +193,18 @@
 <script>
     import {mapGetters} from 'vuex';
     import {Editor} from 'vue-editor-js'
+    import {showImageMixin} from '../mixins/showImageMixin'
     import ImageTool from '@editorjs/image';
     import PostView from './PostView'
     import Vue from 'vue';
+
 
     export default {
         components: {
             Editor,
             PostView
         },
+        mixins: [showImageMixin],
         data() {
             return {
                 defaultSelectOption: 'Выберите',
@@ -255,14 +258,6 @@
                     return 'Корректно заполните обязательные поля'
                 }
                 return this.isCreateMode ? 'Опубликовать' : 'Сохранить изменения';
-            },
-            getImageUrl() {
-                if (!!this.post.image) {
-                    return this.post.image;
-                } else {
-                    let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
-                    return require('../assets/' + imageName);
-                }
             },
             isValidFilled() {
                 for (let prop in this.inputStatusValid) {

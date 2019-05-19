@@ -60,9 +60,11 @@
 
 <script>
 
+    import {showImageMixin} from '../mixins/showImageMixin'
 
     export default {
         props: ['post'],
+        mixins: [showImageMixin],
         computed: {
             prepareText() {
                 let blocks = this.post.message.blocks;
@@ -77,14 +79,6 @@
                     }
                 }
                 return "Отзыв содержит только медиа данные без текста";
-            },
-            getImageUrl() { /* todo to common, duplicate in postcreate.vue */
-                if (!!this.post.image) {
-                    return this.post.image;
-                } else {
-                    let imageName = this.post.gender === 'female' ? 'woman.png' : 'man.png';
-                    return require('../assets/' + imageName);
-                }
             },
             postUrl() {
                 return '/posts/' + this.post.id;
