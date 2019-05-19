@@ -76,7 +76,7 @@
                 <span class="select">
                   <select @change="validateCity" v-model.trim="post.city">
                     <option selected>{{ defaultSelectOption }}</option>
-                    <option v-for="location in locations">
+                    <option v-for="location in locations" :key="location.city">
                       {{ location.city }}
                     </option>
                   </select>
@@ -280,12 +280,10 @@ import { CommonPostMixin } from "../mixins/CommonPostMixin";
 import { PostRepository } from "../mixins/repository/PostRepository";
 import { ImageRepository } from "../mixins/repository/ImageRepository";
 import ImageTool from "@editorjs/image";
-import PostView from "./PostView";
 
 export default {
   components: {
-    Editor,
-    PostView
+    Editor
   },
   mixins: [CommonPostMixin, PostRepository, ImageRepository],
   data() {
@@ -424,7 +422,7 @@ export default {
       }
     },
 
-    onChange(e) {
+    onChange() {
       this.$refs.editor.save();
     },
 
@@ -442,7 +440,6 @@ export default {
     },
 
     uploadImageByFile($event) {
-      let file = $event.target.files[0];
       this.apiUploadImageByFile(
         $event.target.files[0],
         data => (this.post.image = data.file.url)
@@ -509,7 +506,7 @@ export default {
         this.post.datingService !== this.defaultSelectOption;
     },
 
-    validateLogin(e) {
+    validateLogin() {
       this.post.system.author = this.post.system.author.replace(
         /[^a-z0-9]+/,
         ""

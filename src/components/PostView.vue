@@ -54,7 +54,7 @@
 
       <div class="column post-view is-7-desktop is-8-tablet">
         <div class="content">
-          <template v-for="block in postBlocks">
+          <div v-for="(block, index) in postBlocks" :key="index">
             <div v-if="block.type === 'paragraph'" class="post-block content">
               <p>
                 <span v-html="block.data.text"></span>
@@ -63,7 +63,7 @@
 
             <div v-if="block.type === 'list'" class="post-block content">
               <ul>
-                <li v-for="item in block.data.items">
+                <li v-for="(item, index) in block.data.items" :key="index">
                   {{ item }}
                 </li>
               </ul>
@@ -86,7 +86,7 @@
               />
               <p>{{ block.data.caption }}</p>
             </div>
-          </template>
+          </div>
         </div>
       </div>
     </div>
