@@ -34,11 +34,10 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import PostItem from "./PostItem";
-import { PostRepository } from "../mixins/repository/PostRepository";
+    import PostItem from "./PostItem";
+    import {PostRepository} from "../mixins/repository/PostRepository";
 
-export default {
+    export default {
   components: {
     PostItem
   },
@@ -47,11 +46,6 @@ export default {
     return {
       posts: []
     };
-  },
-  computed: {
-    ...mapGetters("user", {
-      userName: "getName"
-    })
   },
   methods: {
     fetchPosts() {

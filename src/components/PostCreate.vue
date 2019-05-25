@@ -405,7 +405,7 @@ export default {
       });
     },
     updatePost() {
-      this.apiUpdatePost(this.post, data => {
+      this.apiUpdatePost(this.postId, this.post, data => {
         this.$router.push("/posts/" + data.id);
       });
     },

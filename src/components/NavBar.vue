@@ -2,15 +2,15 @@
   <nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link class="navbar-item" tag="a" :to="'/'">
-        <img src="../assets/logo.png" width="112" height="28" />
+        <img src="../assets/logo.png" width="112" height="28"/>
       </router-link>
 
       <a
-        role="button"
-        class="navbar-burger burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
+          role="button"
+          class="navbar-burger burger"
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -52,11 +52,16 @@
               <strong>Написать</strong>
             </router-link>
 
-            <a class="button is-primary">
+            <router-link :to="'/registration'" tag="a" class="button is-primary">
               <strong>Регистрация</strong>
-            </a>
-            <a class="button is-light">
-              Вход
+            </router-link>
+
+            <router-link :to="'/login'" tag="a" class="button is-light">
+              <strong>Вход</strong>
+            </router-link>
+
+            <a v-if="isAuthenticated" @click.prevent="logout" class="button is-light">
+              <strong>Выход</strong>
             </a>
           </div>
         </div>
@@ -66,7 +71,26 @@
 </template>
 
 <script>
-export default {};
+
+    import {mapGetters} from 'vuex';
+
+
+    export default {
+
+        computed: {
+            ...mapGetters('user', {
+                isAuthenticated: 'isAuthenticated'
+            })
+        },
+        methods: {
+            logout: function () {
+                this.$store.dispatch('user/removeUser')
+                    .then(() => {
+                        this.$router.push('/')
+                    })
+            }
+        }
+    };
 </script>
 
 <style scoped></style>

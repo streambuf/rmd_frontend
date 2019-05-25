@@ -1,38 +1,30 @@
 import Vue from "vue";
 import {AbstractRepository} from "./AbstractRepository";
 
-export const PostRepository = {
+export const UserRepository = {
   mixins: [AbstractRepository],
   methods: {
-    apiFetchPosts(onSuccess, onFail = false) {
+    apiFetchUser(id, onSuccess, onFail = false) {
       Vue.http
-        .get("posts")
+        .get("users/" + id)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));
     },
 
-    apiFetchPost(id, onSuccess, onFail = false) {
+    apiRegisterUser(registerRequest, onSuccess, onFail = false) {
+      let jsonRegisterRequest = JSON.stringify(registerRequest);
       Vue.http
-        .get("posts/" + id)
+        .post("users", jsonRegisterRequest)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));
     },
 
-    apiCreatePost(post, onSuccess, onFail = false) {
-      let postRequest = JSON.stringify(post);
+    apiLoginUser(loginRequest, onSuccess, onFail = false) {
+      let jsonLoginRequest = JSON.stringify(loginRequest);
       Vue.http
-        .post("posts", postRequest)
-        .then(response => response.json())
-        .then(response => this.handleSuccess(response, onSuccess))
-        .catch(response => this.handleFail(response, onFail));
-    },
-
-    apiUpdatePost(postId, post, onSuccess, onFail = false) {
-      let postRequest = JSON.stringify(post);
-      Vue.http
-        .put("posts/" + postId, postRequest)
+        .post("users/login", jsonLoginRequest)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));

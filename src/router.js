@@ -3,7 +3,27 @@ import Router from "vue-router";
 import PoststList from "./components/PostsList";
 import PostCreate from "./components/PostCreate";
 import PostView from "./components/PostView";
+import Registration from "./components/user/Registration";
+import Login from "./components/user/Login";
 import Error404 from "./components/Error404";
+
+import { store } from "./store";
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters['user/isAuthenticated']) {
+    next();
+    return
+  }
+  next('/login')
+};
+
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters['user/isAuthenticated']) {
+    next();
+    return
+  }
+  next('/')
+};
 
 Vue.use(Router);
 
@@ -15,15 +35,27 @@ const routes = [
   },
   {
     path: "/posts/add",
-    component: PostCreate
+    component: PostCreate,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: "/posts/edit/:id",
-    component: PostCreate
+    component: PostCreate,
+    beforeEnter: ifAuthenticated,
   },
   {
     path: "/posts/:id",
     component: PostView
+  },
+  {
+    path: "/registration",
+    component: Registration,
+    beforeEnter: ifNotAuthenticated
+  },
+  {
+    path: "/login",
+    component: Login,
+    beforeEnter: ifNotAuthenticated
   },
   {
     path: "*",

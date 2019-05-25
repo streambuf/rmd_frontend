@@ -1,21 +1,43 @@
+import Vue from 'vue';
+
 export default {
   namespaced: true,
   state: {
-    name: "Max Fax"
+    user: getUserFromLocalStorage()
   },
   getters: {
-    getName(state) {
-      return state.name;
+    isAuthenticated: state => !!state.user,
+    getUser(state) {
+      return state.user;
     }
   },
   mutations: {
-    setName(state, name) {
-      state.nabla = name;
+    setUser(state, data) {
+      state.user = data;
+      Vue.http.headers.common["Authorization"] = "Bearer " + data.authToken;
+      localStorage.setItem('user', JSON.stringify(data));
+    },
+    removeUser(state) {
+      localStorage.removeItem('user');
+      state.user = '';
+      Vue.http.headers.common["Authorization"] = '';
     }
   },
   actions: {
-    setName(store, name) {
-      store.commit("set", name);
+    setUser(store, data) {
+      store.commit("setUser", data);
+    },
+    removeUser(store) {
+      store.commit("removeUser")
     }
   }
 };
+
+function getUserFromLocalStorage() {
+  let user = localStorage.getItem('user');
+  if (user !== null) {
+    return JSON.parse(user);
+  } else {
+    return '';
+  }
+}

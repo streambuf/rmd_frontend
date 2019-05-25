@@ -1,6 +1,8 @@
 import Vue from "vue";
+import {AbstractRepository} from "./AbstractRepository";
 
 export const ImageRepository = {
+  mixins: [AbstractRepository],
   methods: {
     apiUploadImageByFile(file, onSuccess, onFail = false) {
       let formData = new FormData();
@@ -12,8 +14,8 @@ export const ImageRepository = {
           }
         })
         .then(response => response.json())
-        .then(response => handleSuccess(response, onSuccess))
-        .catch(response => handleFail(response, onFail));
+        .then(response => this.handleSuccess(response, onSuccess))
+        .catch(response => this.handleFail(response, onFail));
     },
 
     apiUploadImageByUrl(urlImage, onSuccess, onFail = false) {
@@ -21,20 +23,8 @@ export const ImageRepository = {
       Vue.http
         .post("images/uploadByUrl", request)
         .then(response => response.json())
-        .then(response => handleSuccess(response, onSuccess))
-        .catch(response => handleFail(response, onFail));
+        .then(response => this.handleSuccess(response, onSuccess))
+        .catch(response => this.handleFail(response, onFail));
     }
   }
 };
-
-function handleSuccess(data, onSuccess) {
-  onSuccess(data);
-}
-
-function handleFail(response, onFail) {
-  if (!onFail) {
-    console.log(response);
-  } else {
-    onFail(response);
-  }
-}
