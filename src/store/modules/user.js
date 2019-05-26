@@ -7,8 +7,10 @@ export default {
   },
   getters: {
     isAuthenticated: state => !!state.user,
-    getUser(state) {
-      return state.user;
+    isAdmin: (state, getters) => getters.isAuthenticated && state.user.privileges.includes('ADMIN'),
+    getCurrentUser: state => state.user,
+    getCurrentLogin: (state, getters) => {
+      return getters.isAuthenticated ? state.user.login : ''
     }
   },
   mutations: {

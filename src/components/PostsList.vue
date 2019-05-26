@@ -34,28 +34,28 @@
 </template>
 
 <script>
-    import PostItem from "./PostItem";
-    import {PostRepository} from "../mixins/repository/PostRepository";
+  import PostItem from "./PostItem";
+  import {PostRepository} from "../mixins/repository/PostRepository";
 
-    export default {
-  components: {
-    PostItem
-  },
-  mixins: [PostRepository],
-  data() {
-    return {
-      posts: []
-    };
-  },
-  methods: {
-    fetchPosts() {
-      this.apiFetchPosts(data => (this.posts = data));
+  export default {
+    components: {
+      PostItem
+    },
+    mixins: [PostRepository],
+    data() {
+      return {
+        posts: []
+      };
+    },
+    methods: {
+      fetchPosts() {
+        this.apiFetchPosts(data => (this.posts = data));
+      }
+    },
+    mounted() {
+      this.fetchPosts();
     }
-  },
-  mounted() {
-    this.fetchPosts();
-  }
-};
+  };
 </script>
 
 <style scoped></style>

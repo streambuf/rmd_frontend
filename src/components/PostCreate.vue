@@ -150,7 +150,7 @@
             </div>
           </div>
 
-          <div class="field">
+          <div v-if="isAdmin" class="field">
             <label class="label">Логин пользователя</label>
             <div class="control">
               <input
@@ -325,6 +325,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('user', {
+      isAdmin: 'isAdmin'
+    }),
     ...mapGetters("locations", {
       locations: "getLocations"
     }),
@@ -508,7 +511,7 @@ export default {
 
     validateLogin() {
       this.post.system.author = this.post.system.author.replace(
-        /[^a-z0-9]+/,
+        /[^а-яА-ЯёЁa-zA-Z0-9]+/,
         ""
       );
     },

@@ -48,21 +48,26 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link :to="'/posts/add'" tag="a" class="button is-primary">
-              <strong>Написать</strong>
-            </router-link>
+            <template v-if="isAuthenticated">
+              <router-link :to="'/posts/add'" tag="a" class="button is-primary">
+                <strong>Написать</strong>
+              </router-link>
 
-            <router-link :to="'/registration'" tag="a" class="button is-primary">
-              <strong>Регистрация</strong>
-            </router-link>
+              <a  @click.prevent="logout" class="button is-light">
+                <strong>Выход</strong>
+              </a>
+            </template>
+            <template v-else>
+              <router-link :to="'/registration'" tag="a" class="button is-primary">
+                <strong>Регистрация</strong>
+              </router-link>
 
-            <router-link :to="'/login'" tag="a" class="button is-light">
-              <strong>Вход</strong>
-            </router-link>
+              <router-link :to="'/login'" tag="a" class="button is-light">
+                <strong>Вход</strong>
+              </router-link>
+            </template>
 
-            <a v-if="isAuthenticated" @click.prevent="logout" class="button is-light">
-              <strong>Выход</strong>
-            </a>
+
           </div>
         </div>
       </div>
