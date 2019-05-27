@@ -4,9 +4,9 @@ import {AbstractRepository} from "./AbstractRepository";
 export const PostRepository = {
   mixins: [AbstractRepository],
   methods: {
-    apiFetchPosts(onSuccess, onFail = false) {
+    apiFetchPosts(size, page, onSuccess, onFail = false) {
       Vue.http
-        .get("posts")
+        .get("posts?size=" + size + "&page=" + page)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));

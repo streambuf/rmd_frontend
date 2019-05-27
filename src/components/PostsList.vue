@@ -44,17 +44,39 @@
     mixins: [PostRepository],
     data() {
       return {
+        bottom: false,
+        size: 25,
+        page: 0,
         posts: []
       };
     },
     methods: {
-      fetchPosts() {
-        this.apiFetchPosts(data => (this.posts = data));
+      fetchPosts(size, page) {
+        this.apiFetchPosts(size, page, data => (this.posts = this.posts.concat(data)));
+      },
+      bottomVisible() {
+        const scrollY = window.scrollY;
+        const visible = document.documentElement.clientHeight;
+        const pageHeight = document.documentElement.scrollHeight;
+        const bottomOfPage = visible + scrollY >= pageHeight;
+        return bottomOfPage || pageHeight < visible
       }
     },
     mounted() {
-      this.fetchPosts();
+      window.addEventListener('scroll', () => {
+        this.bottom = this.bottomVisible()
+      });
+      this.fetchPosts(this.size, this.page);
+    },
+    watch: {
+      bottom(bottom) {
+        if (bottom) {
+          this.page += 1;
+          this.fetchPosts(this.size, this.page);
+        }
+      }
     }
+
   };
 </script>
 
