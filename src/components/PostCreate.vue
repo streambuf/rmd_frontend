@@ -480,7 +480,7 @@
 
     validateName() {
       this.post.name = this.capitalizeFirstLetter(this.post.name).replace(
-        /[^а-яА-ЯёЁa-zA-Z0-9]+/,
+        /[^а-яА-ЯёЁa-zA-Z0-9 ]+/,
         ""
       );
       this.inputStatusValid.name = !(
