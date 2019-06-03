@@ -7,7 +7,7 @@ export const ImageRepository = {
     apiUploadImageByFile(file, onSuccess, onFail = false) {
       let formData = new FormData();
       formData.append("image", file);
-      Vue.http
+      return Vue.http
         .post("images/uploadByFile", formData, {
           headers: {
             "Content-Type": "multipart/form-data"
@@ -20,7 +20,7 @@ export const ImageRepository = {
 
     apiUploadImageByUrl(urlImage, onSuccess, onFail = false) {
       let request = JSON.stringify({ url: urlImage });
-      Vue.http
+      return Vue.http
         .post("images/uploadByUrl", request)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))

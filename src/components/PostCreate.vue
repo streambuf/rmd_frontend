@@ -274,14 +274,14 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { Editor } from "vue-editor-js";
-import { CommonPostMixin } from "../mixins/CommonPostMixin";
-import { PostRepository } from "../mixins/repository/PostRepository";
-import { ImageRepository } from "../mixins/repository/ImageRepository";
-import ImageTool from "@editorjs/image";
+  import {mapGetters} from "vuex";
+  import {Editor} from "vue-editor-js";
+  import {CommonPostMixin} from "../mixins/CommonPostMixin";
+  import {PostRepository} from "../mixins/repository/PostRepository";
+  import {ImageRepository} from "../mixins/repository/ImageRepository";
+  import ImageTool from "@editorjs/image";
 
-export default {
+  export default {
   components: {
     Editor
   },
@@ -310,6 +310,10 @@ export default {
             endpoints: {
               byFile: process.env.VUE_APP_HOST + "/images/uploadByFile",
               byUrl: process.env.VUE_APP_HOST + "/images/uploadByUrl"
+            },
+            uploader: {
+              uploadByFile: (file) => this.apiUploadImageByFile(file, data => {}),
+              uploadByUrl: (url) => this.apiUploadImageByUrl(url, data => {})
             }
           }
         }
