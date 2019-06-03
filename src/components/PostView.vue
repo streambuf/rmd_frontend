@@ -150,7 +150,7 @@
         this.apiFetchPost(this.postId, data => (this.post = data));
       },
       goToEditing() {
-        this.$router.push("/posts/edit/" + this.post.id);
+        this.$router.push("/posts/edit/" + this.post.slug);
       }
     },
     created() {

@@ -408,12 +408,12 @@
     },
     createPost() {
       this.apiCreatePost(this.post, data => {
-        this.$router.push("/posts/" + data.id);
+        this.$router.push("/posts/" + data.slug);
       });
     },
     updatePost() {
       this.apiUpdatePost(this.postId, this.post, data => {
-        this.$router.push("/posts/" + data.id);
+        this.$router.push("/posts/" + data.slug);
       });
     },
     onSave(response) {

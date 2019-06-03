@@ -90,7 +90,7 @@ export default {
       return "Отзыв содержит только медиа данные без текста";
     },
     postUrl() {
-      return "/posts/" + this.post.id;
+      return "/posts/" + this.post.slug;
     }
   }
 };
