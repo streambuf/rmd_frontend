@@ -1,5 +1,9 @@
 <template>
   <div>
+    <vue-headful
+        :title="title"
+        description=""
+    />
     <div class="columns is-centered">
       <div class="column post-editor content">
         <div class="post-editor-form">
@@ -346,6 +350,9 @@
         return "Корректно заполните обязательные поля";
       }
       return this.isCreateMode ? "Опубликовать" : "Сохранить изменения";
+    },
+    title() {
+      return this.isCreateMode ? "Создание отзыва" : "Редактирование отзыва";
     },
     isValidFilled() {
       for (let prop in this.inputStatusValid) {

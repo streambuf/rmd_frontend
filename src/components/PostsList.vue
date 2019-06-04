@@ -1,5 +1,10 @@
 <template>
   <div class="columns is-centered">
+    <vue-headful
+        :title="title"
+        description=""
+    />
+
     <div class="column post-list">
       <div v-for="post in posts" :key="post.id">
         <post-item :post="post"></post-item>
@@ -49,6 +54,11 @@
         page: 0,
         posts: []
       };
+    },
+    computed: {
+      title() {
+        return 'RateMyDate - оцени мое свидание. Отзывы о людях с сайтов знакомтсв.'
+      }
     },
     methods: {
       fetchPosts(size, page) {

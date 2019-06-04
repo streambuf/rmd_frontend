@@ -1,5 +1,10 @@
 <template>
   <div>
+    <vue-headful
+        :title="title"
+        description=""
+    />
+
     <div class="columns is-centered ">
       <div class="column post-view-title is-10-desktop is-12-touch">
         <h1>
@@ -125,6 +130,10 @@
       },
       isAuthorOrAdmin() {
         return this.currentLogin === this.post.author || this.isAdmin;
+      },
+      title() {
+        return "Отзыв с сайта знакомств " + this.post.datingService + " " + this.post.name + " возраст " + this.post.age +
+          " город " + this.post.city;
       }
     },
     methods: {

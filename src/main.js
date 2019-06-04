@@ -5,7 +5,9 @@ import VueResource from "vue-resource";
 import { store } from "./store";
 import Bulma from "bulma";
 import Editor from "vue-editor-js";
+import vueHeadful from 'vue-headful';
 import appstyles from "./assets/app-style.css";
+
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {fas} from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +19,7 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Editor);
 Vue.use(VueResource);
 Vue.http.options.root = process.env.VUE_APP_HOST;
+Vue.component('vue-headful', vueHeadful);
 
 let jsonUserFromStorage = localStorage.getItem('user');
 if (!!jsonUserFromStorage) {

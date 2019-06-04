@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <vue-headful
+        title="Регистрация"
+        description=""
+    />
     <div class="columns is-centered">
       <div class="column sign-form is-4-desktop is-narrow-desktop is-6-tablet is-12-mobile">
         <header class="sign-form-header is-primary">
