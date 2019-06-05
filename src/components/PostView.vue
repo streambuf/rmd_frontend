@@ -28,7 +28,7 @@
           <div class="card-image">
             <figure class="image is-1by1">
               <div class="post-view-image">
-                <img v-if="post.id" :src="getImageUrl" alt="Image"/>
+                <img v-if="post.id" :src="getImageUrl" :alt="imageDescription"/>
               </div>
             </figure>
           </div>
@@ -134,6 +134,9 @@
       title() {
         return "Отзыв с сайта знакомств " + this.post.datingService + " " + this.post.name + " возраст " + this.post.age +
           " город " + this.post.city;
+      },
+      imageDescription() {
+        return 'фотография ' + this.post.name + ' с ' + this.post.datingService + ' о котором(ой) написан отзыв';
       }
     },
     methods: {

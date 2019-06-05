@@ -1,7 +1,6 @@
 <template>
   <div>
-    <img alt="Vue logo" src="../assets/logo.png" />
-    Page not found
+    Страница не найдена
   </div>
 </template>
 

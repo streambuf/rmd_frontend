@@ -3,7 +3,7 @@
     <div class="media-left post-media">
       <div class="post-image">
         <a :href="postUrl">
-          <img :src="getImageUrl" alt="Image" />
+          <img :src="getImageUrl" :alt="imageDescription" />
         </a>
       </div>
     </div>
@@ -91,6 +91,9 @@ export default {
     },
     postUrl() {
       return "/posts/" + this.post.slug;
+    },
+    imageDescription() {
+      return 'фотография ' + this.post.name + ' с ' + this.post.datingService + ' о котором(ой) написан отзыв';
     }
   }
 };

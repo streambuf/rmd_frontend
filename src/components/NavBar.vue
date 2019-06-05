@@ -2,7 +2,7 @@
   <nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <router-link class="navbar-item" tag="a" :to="'/'">
-        <img src="../assets/logo.png" width="112" height="28"/>
+        <img src="../assets/logo.png" alt="логотип" width="112" height="28"/>
       </router-link>
 
       <a
