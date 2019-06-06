@@ -159,7 +159,11 @@
         }
       },
       fetchPost() {
-        this.apiFetchPost(this.postId, data => (this.post = data));
+        this.apiFetchPost(this.postId, data => (this.post = data), resp => {
+          if (resp.status === 404) {
+            this.$router.push("/404.html");
+          }
+        });
       },
       goToEditing() {
         this.$router.push("/posts/edit/" + this.post.slug);
