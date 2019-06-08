@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <section class="section is-$white-ter">
+    <section class="app-section is-$white-ter">
       <div class="container is-fluid">
         <router-view></router-view>
       </div>

@@ -3,12 +3,24 @@
     min-height: 100vh;
 }
 
+.app-section {
+    padding: 2rem 0rem;
+}
+
 /*
       Common
  */
 
 .post-media {
-    margin: -0.75em 0.75em -1em -1em;
+    /*background-color: #9f63b4;*/
+    /*margin: -0.75em 0.75em -1em -1em;*/
+}
+
+@media screen and (min-width: 769px) {
+    .post-media {
+        max-width: 180px;
+        padding: 0.5em;
+    }
 }
 
 .post-image {
@@ -50,9 +62,32 @@
 */
 
 .app-menu {
+     background-color: #FDFDFD;
+     padding: 1.25rem;
+     width: 16em;
+ }
+
+.app-menu-mobile-toggle {
     background-color: #FDFDFD;
-    padding: 1.25rem;
-    width: 16em;
+    margin-top: -2em;
+    margin-bottom: 1em;
+    padding: 0.4em;
+    padding-left: 1em;
+}
+
+.app-menu-mobile {
+    background-color: #FDFDFD;
+}
+
+.div-link {
+   color: black !important;
+}
+
+
+@media screen and (min-width: 769px) {
+    .app-menu-mobile-toggle {
+        display: none !important;
+    }
 }
 
 .post-list {
@@ -65,10 +100,9 @@
 
 .post-list-item {
     background-color: #FDFDFD;
-    padding: 1.5em 1.5em 0.5em 1.5em;
-    margin-bottom: 1.5em;
-    display: flex;
-    min-height: 172px;
+    margin-bottom: 1em !important;
+    margin-top: 0em;
+
 }
 
 .post-list-item-media {
@@ -77,8 +111,8 @@
 }
 
 .post-list-item-content {
-    margin-bottom: 1rem !important;
     flex-grow: 1;
+    display: flex;
 }
 
 .post-list-item-content a {
@@ -100,20 +134,23 @@
 }
 
 .post-list-item-footer {
+    padding-top: 1em;
     padding-left: 1em;
+    padding-right: 0.3em;
 }
 
 .post-list-item-footer-item {
-    padding-right: 2.5em;
+    padding-right: 1em;
     color: #666666;
 }
 
 .post-list-item-footer-item-like {
     color: gray;
+    margin-right: 0.4em !important;
 }
 
 .post-list-item-footer-item-score {
-    padding-right: 1em;
+    padding-right: 0.4em;
     color: forestgreen;
     font-weight: bold;
 }
@@ -245,8 +282,6 @@
  */
 
 .sign-form {
-    /*max-width: 400px;*/
-    /*min-width: 400px;*/
     background-color: #FDFDFD;
     text-align: center;
     padding: 1.5em;
@@ -267,8 +302,6 @@
 }
 
 .sign-form-footer {
-    /*width: 50%;*/
-    /*margin: 0 auto;*/
 }
 
 

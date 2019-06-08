@@ -1,14 +1,16 @@
 <template>
-  <div class="post-list-item">
-    <div class="media-left post-media">
-      <div class="post-image">
-        <a :href="postUrl">
-          <img :src="getImageUrl" :alt="imageDescription" />
-        </a>
-      </div>
+  <div class="columns post-list-item">
+    <div class="column post-media">
+      <figure class="image is-1by1">
+        <div class="post-image">
+          <a :href="postUrl">
+            <img :src="getImageUrl" :alt="imageDescription" />
+          </a>
+        </div>
+      </figure>
     </div>
-    <div class="media-content post-list-item-media">
-      <div class="post-list-item-content content">
+    <div class="column post-list-item-media">
+      <div class="post-list-item-content">
         <a :href="postUrl">
           <strong>{{ post.name }} {{ post.age }}, </strong>
           <small>с сайта {{ post.datingService }} </small>
@@ -23,12 +25,9 @@
           </div>
         </a>
       </div>
-      <div class="level is-mobile">
-        <div class="level-left post-list-item-footer">
-          <a
-            class="level-item post-list-item-footer-item"
-            aria-label="comments"
-          >
+      <div class="level is-mobile post-list-item-footer">
+        <div class="level-left">
+          <a class="level-item post-list-item-footer-item" aria-label="comments">
             <span class="icon is-small">
               <font-awesome-icon icon="comments" />
             </span>
@@ -42,24 +41,18 @@
           </a>
         </div>
 
-        <div class="level-right post-list-item-footer">
-          <a
-            class="level-item post-list-item-footer-item-like"
-            aria-label="eye"
-          >
+        <div class="level-right">
+          <a class="level-item post-list-item-footer-item-like" aria-label="like">
             <span class="icon is-small">
-              <font-awesome-icon icon="thumbs-up" />
+              <font-awesome-icon icon="chevron-up" />
             </span>
           </a>
           <div class="post-list-item-footer-item-score">
             +1
           </div>
-          <a
-            class="level-item post-list-item-footer-item-like"
-            aria-label="user2"
-          >
+          <a class="level-item post-list-item-footer-item-like" aria-label="dislike">
             <span class="icon is-small">
-              <font-awesome-icon icon="thumbs-down" />
+              <font-awesome-icon icon="chevron-down" />
             </span>
           </a>
         </div>
