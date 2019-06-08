@@ -75,6 +75,11 @@
     padding-left: 1em;
 }
 
+.app-menu-switch-icon {
+    margin-left: 0.75em;
+    width: 16px;
+}
+
 .app-menu-mobile {
     background-color: #FDFDFD;
 }
@@ -128,6 +133,12 @@
     padding-top: 0.3em;
 }
 
+.post-list-item-content-icon {
+    width: 16px;
+    margin-bottom: -3px;
+    margin-left: 3px;
+}
+
 .post-image img:hover {
     -webkit-transform: scale(1.01);
     transform: scale(1.05);
@@ -150,7 +161,7 @@
 }
 
 .post-list-item-footer-item-score {
-    padding-right: 0.4em;
+    margin-right: 0.4em;
     color: forestgreen;
     font-weight: bold;
 }

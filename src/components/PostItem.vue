@@ -13,10 +13,13 @@
       <div class="post-list-item-content">
         <a :href="postUrl">
           <strong>{{ post.name }} {{ post.age }}, </strong>
-          <small>с сайта {{ post.datingService }} </small>
+          <small>с сайта
+            <img :src="datingServiceIcon" class="post-list-item-content-icon">
+            {{ post.datingService }} </small>
           <small>
+            &nbsp;
             <span class="icon is-small">
-              <font-awesome-icon icon="home" />
+              <font-awesome-icon icon="map-marker-alt" />
             </span>
             {{ post.city }}
           </small>
@@ -47,9 +50,10 @@
               <font-awesome-icon icon="chevron-up" />
             </span>
           </a>
-          <div class="post-list-item-footer-item-score">
-            +1
-          </div>
+          <span class="tag is-primary post-list-item-footer-item-score">1</span>
+          <!--<div class="post-list-item-footer-item-score">-->
+            <!--+1-->
+          <!--</div>-->
           <a class="level-item post-list-item-footer-item-like" aria-label="dislike">
             <span class="icon is-small">
               <font-awesome-icon icon="chevron-down" />
@@ -87,6 +91,9 @@ export default {
     },
     imageDescription() {
       return 'фотография ' + this.post.name + ' с ' + this.post.datingService + ' о котором(ой) написан отзыв';
+    },
+    datingServiceIcon() {
+      return this.getImageUrlByDatingServiceName(this.post.datingService);
     }
   }
 };

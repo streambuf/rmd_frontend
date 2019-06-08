@@ -35,10 +35,9 @@
           <p class="menu-label">
             Площадки
           </p>
-          <ul class="menu-list">
-            <li><a>Mamba</a></li>
-            <li class="is-active"><a>Tinder</a></li>
-          </ul>
+            <template v-for="(datingService, index) in datingServices">
+              <form-switch :name="datingService.name" :iconUrl="getImageUrlByDatingServiceName(datingService.name)"></form-switch>
+            </template>
           <p class="menu-label">
             Город
           </p>
@@ -60,19 +59,42 @@
 
 <script>
   import PostItem from "./PostItem";
+  import FormSwitch from "./form/FormSwitch";
   import {PostRepository} from "../mixins/repository/PostRepository";
+  import {CommonPostMixin} from "../mixins/CommonPostMixin";
+
 
   export default {
     components: {
-      PostItem
+      PostItem, FormSwitch
     },
-    mixins: [PostRepository],
+    mixins: [PostRepository, CommonPostMixin],
     data() {
       return {
         bottom: false,
         size: 25,
         page: 0,
-        posts: []
+        posts: [],
+        datingServices: [
+          {
+            name: 'Mamba'
+          },
+          {
+            name: 'Tinder'
+          },
+          {
+            name: 'Badoo'
+          },
+          {
+            name: 'Dating.ru'
+          },
+          {
+            name: 'Chpoking.ru'
+          },
+          {
+            name: 'Остальные'
+          },
+        ]
       };
     },
     computed: {
