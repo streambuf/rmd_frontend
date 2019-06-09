@@ -41,9 +41,22 @@
           <p class="menu-label">
             Город
           </p>
-          <ul class="menu-list">
-            <li><a>Выбор возраста</a></li>
-          </ul>
+          <p class="control has-icons-left">
+            <span class="select is-primary">
+              <select>
+                <option selected>Любой</option>
+                <option v-for="location in locations" :key="location.city">
+                  {{ location.city }}
+                </option>
+              </select>
+            </span>
+            <span class="icon is-small is-left">
+              <font-awesome-icon icon="map-marker-alt"/>
+            </span>
+          </p>
+          <p class="menu-label">
+            Возраст
+          </p>
           <p class="menu-label">
             Пол
           </p>
@@ -58,6 +71,7 @@
 </template>
 
 <script>
+  import {mapGetters} from "vuex";
   import PostItem from "./PostItem";
   import FormSwitch from "./form/FormSwitch";
   import {PostRepository} from "../mixins/repository/PostRepository";
@@ -98,6 +112,9 @@
       };
     },
     computed: {
+      ...mapGetters("locations", {
+        locations: "getLocations"
+      }),
       title() {
         return 'RateMyDate - оцени мое свидание. Отзывы о людях с сайтов знакомтсв.'
       }
