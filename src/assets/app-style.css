@@ -80,6 +80,11 @@
     width: 16px;
 }
 
+.app-menu-slider {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
 .app-menu-mobile {
     background-color: #FDFDFD;
 }

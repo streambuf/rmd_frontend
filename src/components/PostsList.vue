@@ -57,12 +57,21 @@
           <p class="menu-label">
             Возраст
           </p>
+
+          <vue-slider v-model="value" :min="18" :tooltip="'always'" :tooltip-placement="['top', 'bottom']" class="app-menu-slider"></vue-slider>
+
           <p class="menu-label">
             Пол
           </p>
           <ul class="menu-list">
-            <li><a>Отзывы о девушках</a></li>
-            <li><a>Отзывы о парнях</a></li>
+            <div class="field">
+              <input class="is-checkradio is-circle" id="manCheckbox" type="checkbox" name="manCheckbox" checked="checked">
+              <label for="manCheckbox">Отзывы о парнях</label>
+            </div>
+            <div class="field">
+              <input class="is-checkradio is-circle" id="womanCheckbox" type="checkbox" name="womanCheckbox" checked="checked">
+              <label for="womanCheckbox">Отзывы о девушках</label>
+            </div>
           </ul>
         </aside>
       </div>
@@ -77,10 +86,16 @@
   import {PostRepository} from "../mixins/repository/PostRepository";
   import {CommonPostMixin} from "../mixins/CommonPostMixin";
 
+  import VueSlider from 'vue-slider-component'
+  import 'vue-slider-component/theme/default.css'
+  import 'bulma-checkradio/dist/css/bulma-checkradio.min.css';
+
+
+
 
   export default {
     components: {
-      PostItem, FormSwitch
+      PostItem, FormSwitch, VueSlider
     },
     mixins: [PostRepository, CommonPostMixin],
     data() {
@@ -89,6 +104,7 @@
         size: 25,
         page: 0,
         posts: [],
+        value: [18, 100],
         datingServices: [
           {
             name: 'Mamba'
