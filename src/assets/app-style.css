@@ -145,9 +145,13 @@
     margin-left: 3px;
 }
 
-.post-image img:hover {
-    -webkit-transform: scale(1.01);
-    transform: scale(1.05);
+
+
+@media screen and (min-width: 769px) {
+    .post-image img:hover {
+        -webkit-transform: scale(1.01);
+        transform: scale(1.05);
+    }
 }
 
 .post-list-item-footer {
