@@ -61,13 +61,18 @@
     PostList.vue
 */
 
-.app-menu {
+.post-filter-menu {
      background-color: #FDFDFD;
      padding: 1.25rem;
      width: 16em;
- }
+}
 
-.app-menu-mobile-toggle {
+.post-filter-menu-mobile {
+    background-color: #FDFDFD;
+    padding: 1em 3em 1em 3em;
+}
+
+.post-filter-menu-mobile-toggle {
     background-color: #FDFDFD;
     margin-top: -2em;
     margin-bottom: 1em;
@@ -75,18 +80,14 @@
     padding-left: 1em;
 }
 
-.app-menu-switch-icon {
+.post-filter-menu-switch-icon {
     margin-left: 0.75em;
     width: 16px;
 }
 
-.app-menu-slider {
+.post-filter-menu-slider {
     margin-top: 2em;
     margin-bottom: 2em;
-}
-
-.app-menu-mobile {
-    background-color: #FDFDFD;
 }
 
 .div-link {
@@ -95,7 +96,7 @@
 
 
 @media screen and (min-width: 769px) {
-    .app-menu-mobile-toggle {
+    .post-filter-menu-mobile-toggle {
         display: none !important;
     }
 }

@@ -2,7 +2,7 @@
   <div class="field">
     <input :id="name" type="checkbox" :name="name" class="switch is-thin" checked="checked">
     <label :for="name"></label>
-    <img :src="iconUrl" class="app-menu-switch-icon">
+    <img :src="iconUrl" class="post-filter-menu-switch-icon">
     {{name}}
   </div>
 </template>
