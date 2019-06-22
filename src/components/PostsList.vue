@@ -24,7 +24,9 @@
     <div class="columns is-centered">
 
       <div v-if="mobileMenuFiltersShow" class="is-mobile is-hidden-desktop-only is-hidden-widescreen-only is-hidden-tablet-only">
-        <posts-filter :menuClass="'post-filter-menu-mobile'"></posts-filter>
+        <posts-filter
+            @applyPostFilters="onApplyFilters"
+            :menuClass="'post-filter-menu-mobile'"></posts-filter>
       </div>
 
       <div class="column post-list">
