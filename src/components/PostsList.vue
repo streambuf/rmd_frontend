@@ -1,6 +1,8 @@
 <template>
   <div>
-    <vue-headful :title="title" description=""/>
+    <vue-headful :title="title"
+                 description="Истории свиданий и отзывы о встречах с людьми с сайтов знакомств - читайте анонимные отзывы о свиданиях!
+                 Лучшие анонимные отзывы о знакомствах в интернете - расскажите о своем свидании с сайта знакомств!"/>
 
     <a @click="toggleMobileMenuFilters" class="div-link">
     <div class="level post-filter-menu-mobile-toggle is-mobile is-hidden-desktop-only is-hidden-widescreen-only is-hidden-tablet-only">
@@ -26,8 +28,11 @@
       </div>
 
       <div class="column post-list">
-        <div v-for="post in posts" :key="post.id">
+        <div v-if="containsPosts" v-for="post in posts" :key="post.id">
           <post-item :post="post"></post-item>
+        </div>
+        <div v-if="!containsPosts">
+          <strong><i>Отзывы с указанными параметрами на найдены. <br> Измените фильтры поиска или обновите страницу, чтобы они сбросились.</i></strong>
         </div>
       </div>
 
@@ -59,7 +64,8 @@
         posts: [],
         size: 25,
         page: 0,
-        mobileMenuFiltersShow: false
+        mobileMenuFiltersShow: false,
+        containsPosts: true
       };
     },
     computed: {
@@ -68,11 +74,14 @@
       },
       toggleMobileMenuFiltersLabel() {
         return this.mobileMenuFiltersShow ? 'Скрыть фильтры' : 'Настроить фильтры'
-      }
+      },
     },
     methods: {
       fetchPosts(size, page) {
-        this.apiFetchPosts(size, page, data => (this.posts = this.posts.concat(data)));
+        this.apiFetchPosts(size, page, data => {
+          this.posts = this.posts.concat(data);
+          this.containsPosts = this.posts.length > 0;
+        });
       },
       bottomVisible() {
         const scrollY = window.scrollY;

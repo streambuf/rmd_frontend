@@ -2,7 +2,7 @@
   <div>
     <vue-headful
         :title="title"
-        description=""
+        :description="post.description"
     />
 
     <div class="columns is-centered ">
@@ -109,7 +109,7 @@
     mixins: [CommonPostMixin, PostRepository],
     data() {
       return {
-        post: {}
+        post: {},
       };
     },
     computed: {
