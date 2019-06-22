@@ -90,6 +90,12 @@
     margin-bottom: 2em;
 }
 
+.post-filter-menu-button {
+    padding-top: 1em;
+    display: table;
+    margin: 0 auto;
+}
+
 .div-link {
    color: black !important;
 }

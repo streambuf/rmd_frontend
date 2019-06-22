@@ -1,12 +1,19 @@
 import Vue from "vue";
 import {AbstractRepository} from "./AbstractRepository";
+import {mapGetters} from "vuex";
 
 export const PostRepository = {
   mixins: [AbstractRepository],
+  computed: {
+    ...mapGetters("postfilters", {
+      requestParams: "getRequestParams"
+    })
+  },
   methods: {
     apiFetchPosts(size, page, onSuccess, onFail = false) {
+      console.log(this.requestParams);
       Vue.http
-        .get("posts?size=" + size + "&page=" + page)
+        .get("posts?size=" + size + "&page=" + page + this.requestParams)
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));

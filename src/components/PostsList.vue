@@ -32,7 +32,9 @@
       </div>
 
       <div class="column is-narrow is-hidden-mobile is-centered">
-        <posts-filter :menuClass="'post-filter-menu'"></posts-filter>
+        <posts-filter
+            @applyPostFilters="onApplyFilters"
+            :menuClass="'post-filter-menu'"></posts-filter>
       </div>
     </div>
   </div>
@@ -82,7 +84,10 @@
       toggleMobileMenuFilters() {
         this.mobileMenuFiltersShow = !this.mobileMenuFiltersShow;
       },
-
+      onApplyFilters(e) {
+        this.posts = [];
+        this.fetchPosts(25, 0);
+      }
     },
     mounted() {
       window.addEventListener('scroll', () => {
