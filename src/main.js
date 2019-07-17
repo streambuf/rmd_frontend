@@ -4,6 +4,7 @@ import router from "./router";
 import VueResource from "vue-resource";
 import { store } from "./store";
 import Bulma from "bulma";
+import Bulmajs from "@vizuaalog/bulmajs"
 
 import Editor from "vue-editor-js";
 import vueHeadful from 'vue-headful';

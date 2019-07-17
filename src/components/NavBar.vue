@@ -21,26 +21,19 @@
     <div id="navbarBasicExample" class="navbar-menu ">
       <div class="navbar-start">
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">
+          <a class="navbar-link" :class="rateOrderClass">
             Популярное
           </a>
 
           <div class="navbar-dropdown">
-            <a class="navbar-item">
-              За день
-            </a>
-            <a class="navbar-item">
-              За неделю
-            </a>
-            <a class="navbar-item">
-              За месяц
-            </a>
-            <a class="navbar-item">
-              За все время
-            </a>
+            <template v-for="(range, index) in ranges">
+              <a :key="index" class="navbar-item" :class="range.class" @click="setOrderBestByRange(index, range.type)">
+                {{range.name}}
+              </a>
+            </template>
           </div>
         </div>
-        <a class="navbar-item">
+        <a class="navbar-item" :class="dateOrderClass" @click="setOrderByDate">
           Свежее
         </a>
       </div>
@@ -53,7 +46,7 @@
                 <strong>Написать</strong>
               </router-link>
 
-              <a  @click.prevent="logout" class="button is-light">
+              <a @click.prevent="logout" class="button is-light">
                 <strong>Выход</strong>
               </a>
             </template>
@@ -77,25 +70,78 @@
 
 <script>
 
-    import {mapGetters} from 'vuex';
+  import {mapGetters, mapMutations} from 'vuex';
 
 
-    export default {
-
-        computed: {
-            ...mapGetters('user', {
-                isAuthenticated: 'isAuthenticated'
-            })
-        },
-        methods: {
-            logout: function () {
-                this.$store.dispatch('user/removeUser')
-                    .then(() => {
-                        this.$router.push('/')
-                    })
-            }
+  export default {
+    data() {
+      return {
+        ranges: [
+          {
+            name: 'За день',
+            type: 'DAY',
+            class: ''
+          },
+          {
+            name: 'За неделю',
+            type: 'WEEK',
+            class: ''
+          },
+          {
+            name: 'За месяц',
+            type: 'MONTH',
+            class: ''
+          },
+          {
+            name: 'За все время',
+            type: 'ALL',
+            class: ''
+          }
+        ],
+        dateOrder: true
+      }
+    },
+    computed: {
+      ...mapGetters('user', {
+        isAuthenticated: 'isAuthenticated'
+      }),
+      dateOrderClass() {
+        return this.dateOrder ? 'is-active' : '';
+      },
+      rateOrderClass() {
+        return this.dateOrder ? '' : 'is-active';
+      }
+    },
+    methods: {
+      ...mapMutations("postfilters", {
+        setRangeDate: "setRangeDate"
+      }),
+      logout: function () {
+        this.$store.dispatch('user/removeUser')
+          .then(() => {
+            this.$router.push('/')
+          })
+      },
+      setOrderBestByRange(index, rateDate) {
+        this.clearRangesClass();
+        this.ranges[index].class = 'is-active';
+        this.dateOrder = false;
+        this.setRangeDate(rateDate);
+        this.$emit('applyOrder', {});
+      },
+      setOrderByDate() {
+        this.dateOrder = true;
+        this.clearRangesClass();
+        this.setRangeDate(null);
+        this.$emit('applyOrder', {});
+      },
+      clearRangesClass() {
+        for (let range of this.ranges) {
+          range.class = ''
         }
-    };
+      }
+    }
+  };
 </script>
 
 <style scoped></style>

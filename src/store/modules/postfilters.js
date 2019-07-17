@@ -30,7 +30,8 @@ const defaultFilters = {
       name: 'Остальные',
       checked: true,
     },
-  ]
+  ],
+  rangeDate: null
 };
 
 export default {
@@ -60,6 +61,14 @@ export default {
         requestParams += '&gender=' + filters.gender;
       }
 
+      // todo createdAt заменить на рейтинг
+      if (filters.rangeDate !== null) {
+        requestParams += '&order=createdAt';
+        if (filters.rangeDate !== 'ALL') {
+          requestParams += '&rangeDate=' + filters.rangeDate;
+        }
+      }
+
 
       let neededFilterService = true;
       for (let datingService of filters.datingServices) {
@@ -82,6 +91,9 @@ export default {
   mutations: {
     setFilters(state, filters) {
       state.filters = filters;
+    },
+    setRangeDate(state, rangeDate) {
+      state.filters.rangeDate = rangeDate;
     }
   }
 };

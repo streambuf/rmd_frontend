@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
+    <nav-bar @applyOrder="onApplyOrder"></nav-bar>
     <section class="app-section is-$white-ter">
       <div class="container is-fluid">
         <router-view></router-view>
@@ -21,6 +21,11 @@ export default {
     return {
       msg: "RATE MY DATE"
     };
+  },
+  methods: {
+    onApplyOrder() {
+      this.$emit('applyPostListOrder', {});
+    }
   }
 };
 </script>

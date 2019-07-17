@@ -105,6 +105,7 @@
         this.bottom = this.bottomVisible()
       });
       this.fetchPosts(this.size, this.page);
+      this.$parent.$on('applyPostListOrder', this.onApplyFilters)
     },
     watch: {
       bottom(bottom) {
