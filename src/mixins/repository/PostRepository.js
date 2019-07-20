@@ -43,6 +43,15 @@ export const PostRepository = {
         .then(response => response.json())
         .then(response => this.handleSuccess(response, onSuccess))
         .catch(response => this.handleFail(response, onFail));
+    },
+
+    votePost(vote, onSuccess, onFail = false) {
+      let voteRequest = JSON.stringify(vote);
+      Vue.http
+        .post("posts/vote", voteRequest)
+        .then(response => response.json())
+        .then(response => this.handleSuccess(response, onSuccess))
+        .catch(response => this.handleFail(response, onFail));
     }
   }
 };

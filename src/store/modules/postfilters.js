@@ -61,9 +61,8 @@ export default {
         requestParams += '&gender=' + filters.gender;
       }
 
-      // todo createdAt заменить на рейтинг
       if (filters.rangeDate !== null) {
-        requestParams += '&order=createdAt';
+        requestParams += '&order=rating';
         if (filters.rangeDate !== 'ALL') {
           requestParams += '&rangeDate=' + filters.rangeDate;
         }
