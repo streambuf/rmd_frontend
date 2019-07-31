@@ -61,7 +61,7 @@ export default {
         requestParams += '&gender=' + filters.gender;
       }
 
-      if (filters.rangeDate !== null) {
+      if (filters.rangeDate) {
         requestParams += '&order=rating';
         if (filters.rangeDate !== 'ALL') {
           requestParams += '&rangeDate=' + filters.rangeDate;
@@ -89,10 +89,12 @@ export default {
   },
   mutations: {
     setFilters(state, filters) {
+      let rangeDate = state.filters.rangeDate;
       state.filters = filters;
+      Vue.set(state.filters, 'rangeDate', rangeDate);
     },
     setRangeDate(state, rangeDate) {
-      state.filters.rangeDate = rangeDate;
+      Vue.set(state.filters, 'rangeDate', rangeDate);
     }
   }
 };
