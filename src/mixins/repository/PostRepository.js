@@ -11,7 +11,6 @@ export const PostRepository = {
   },
   methods: {
     apiFetchPosts(size, page, onSuccess, onFail = false) {
-      console.log(this.requestParams);
       Vue.http
         .get("posts?size=" + size + "&page=" + page + this.requestParams)
         .then(response => response.json())

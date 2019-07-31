@@ -58,44 +58,45 @@
         </div>
       </div>
 
-      <div class="column post-view is-7-desktop is-8-tablet">
-        <div class="content">
-          <div v-for="(block, index) in postBlocks" :key="index">
-            <div v-if="block.type === 'paragraph'" class="post-block content">
-              <p>
-                <span v-html="block.data.text"></span>
-              </p>
-            </div>
+      <div class="column is-7-desktop is-8-tablet post-view ">
+          <div class="content post-view-content">
+            <div v-for="(block, index) in postBlocks" :key="index">
+              <div v-if="block.type === 'paragraph'" class="post-block content">
+                <p>
+                  <span v-html="block.data.text"></span>
+                </p>
+              </div>
 
-            <div v-if="block.type === 'list'" class="post-block content">
-              <ul>
-                <li v-for="(item, index) in block.data.items" :key="index">
-                  {{ item }}
-                </li>
-              </ul>
-            </div>
+              <div v-if="block.type === 'list'" class="post-block content">
+                <ul>
+                  <li v-for="(item, index) in block.data.items" :key="index">
+                    {{ item }}
+                  </li>
+                </ul>
+              </div>
 
-            <div v-if="block.type === 'header'" class="post-block content">
-              <component :is="'h' + block.data.level">{{
-                block.data.text
-                }}
-              </component>
-            </div>
+              <div v-if="block.type === 'header'" class="post-block content">
+                <component :is="'h' + block.data.level">{{
+                  block.data.text
+                  }}
+                </component>
+              </div>
 
-            <div
-                v-if="block.type === 'image'"
-                :class="imageWrapperDivClass(block.data)"
-            >
-              <img
-                  :src="block.data.file.url"
-                  :alt="block.data.caption"
-                  :class="imageClass(block.data)"
-              />
-              <p>{{ block.data.caption }}</p>
+              <div
+                  v-if="block.type === 'image'"
+                  :class="imageWrapperDivClass(block.data)"
+              >
+                <img
+                    :src="block.data.file.url"
+                    :alt="block.data.caption"
+                    :class="imageClass(block.data)"
+                />
+                <p>{{ block.data.caption }}</p>
+              </div>
             </div>
           </div>
+          <comment-list :postId="post.id"></comment-list>
         </div>
-      </div>
     </div>
   </div>
 </template>
@@ -104,9 +105,15 @@
   import {CommonPostMixin} from "../mixins/CommonPostMixin";
   import {PostRepository} from "../mixins/repository/PostRepository";
   import {mapGetters} from 'vuex';
+  import CommentList from "./CommentsList";
+  import PostItem from "./PostItem";
+
 
   export default {
     mixins: [CommonPostMixin, PostRepository],
+    components: {
+      CommentList
+    },
     data() {
       return {
         post: {},

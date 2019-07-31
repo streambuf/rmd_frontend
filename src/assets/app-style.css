@@ -237,14 +237,22 @@
     PostView.vue
  */
 .post-view {
+
+    margin: 0em 0em 0em 1.1em;
+
+    /*max-width: 750px;*/
+}
+
+.post-view-content {
+    padding: 1.5em;
+
     background-color: #FDFDFD;
     text-align: center;
-    padding: 1.5em;
-    margin: 0.75em 0.75em 0em 0.75em;
-    /*max-width: 750px;*/
     font-size: 1.10em;
 
 }
+
+
 
 .post-view-title {
     font-size: 2em;
@@ -332,3 +340,44 @@
 }
 
 
+.comments-view {
+    background-color: #FDFDFD;
+    text-align: center;
+    padding: 1.5em;
+    margin: 0.75em 0.75em 0em 0.75em;
+    /*max-width: 750px;*/
+    font-size: 1.05em;
+    margin: 0em;
+}
+
+.comment-editor-message {
+    background-color: #FDFDFD;
+    font-size: 1.10em;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(10, 10, 10, .1);
+}
+
+.comment-editor-message:hover {
+    border-color: #b5b5b5;
+}
+
+.comment-editor-message-control {
+    margin-top: 1em;
+    text-align: left;
+}
+
+.comment-block {
+    margin: 0 auto;
+    text-align: left;
+    margin-bottom: 1.15em;
+}
+
+.comment-author-avatar {
+    margin-left: 0em !important;
+    margin-right: 0.5em !important;
+}
+
+.comment-editor {
+    margin-bottom: 2em;
+}

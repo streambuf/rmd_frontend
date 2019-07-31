@@ -35,7 +35,7 @@
             <span class="icon is-small">
               <font-awesome-icon icon="comments"/>
             </span>
-            &nbsp; 0
+            &nbsp; {{ postComments }}
           </a>
           <a class="level-item post-list-item-footer-item" aria-label="user">
             <span class="icon is-small">
@@ -108,6 +108,12 @@
         } else {
           return 'is-primary';
         }
+      },
+      postComments() {
+        if (this.post.comments === null) {
+          return 0;
+        }
+        return this.post.comments;
       }
     },
     methods: {

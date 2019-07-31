@@ -10,6 +10,9 @@ import Editor from "vue-editor-js";
 import vueHeadful from 'vue-headful';
 import appstyles from "./assets/app-style.css";
 
+import moment from 'moment';
+Vue.prototype.moment = moment;
+moment.locale('ru');
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {fas} from "@fortawesome/free-solid-svg-icons";
