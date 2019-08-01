@@ -94,6 +94,10 @@
                 <p>{{ block.data.caption }}</p>
               </div>
             </div>
+            <div class="post-block content">
+              <p> Это мое личное мнение и оценочное суждение.</p>
+            </div>
+
           </div>
           <comment-list :postId="post.id"></comment-list>
         </div>

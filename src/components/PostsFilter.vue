@@ -9,6 +9,19 @@
                    :value.sync="datingService.checked"
                    :iconUrl="getImageUrlByDatingServiceName(datingService.name)"></form-switch>
     </template>
+
+    <p class="menu-label">
+      Поиск по тексту
+    </p>
+    <div class="field">
+      <div class="control has-icons-left">
+        <input class="input is-primary" type="text" placeholder="Ключевая фраза"/>
+        <span class="icon is-small is-left">
+                  <font-awesome-icon icon="search" />
+                </span>
+      </div>
+    </div>
+
     <p class="menu-label">
       Город
     </p>

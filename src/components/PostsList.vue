@@ -72,7 +72,7 @@
     },
     computed: {
       title() {
-        return 'RateMyDate - оцени мое свидание. Отзывы о людях с сайтов знакомтсв.'
+        return 'RateMyDate - оцени мое свидание. Отзывы о людях с сайтов знакомств.'
       },
       toggleMobileMenuFiltersLabel() {
         return this.mobileMenuFiltersShow ? 'Скрыть фильтры' : 'Настроить фильтры'

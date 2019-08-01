@@ -128,12 +128,14 @@
         this.dateOrder = false;
         this.setRangeDate(rateDate);
         this.$emit('applyOrder', {});
+        this.$router.push('/')
       },
       setOrderByDate() {
         this.dateOrder = true;
         this.clearRangesClass();
         this.setRangeDate(null);
         this.$emit('applyOrder', {});
+        this.$router.push('/')
       },
       clearRangesClass() {
         for (let range of this.ranges) {
