@@ -13,8 +13,8 @@
         </div>
         <div v-if="!showCreateComment" class="field">
           <p class="control">
-            <textarea @click="showCreateComment=true" rows="1" class="textarea"
-                      placeholder="Написать комментарий..."></textarea>
+            <textarea @click="tryCreateComment" rows="1" class="textarea"
+                      :placeholder="createCommentPlaceholder"></textarea>
           </p>
         </div>
       </div>
@@ -54,7 +54,6 @@
   import {mapGetters} from "vuex";
   import {CommentRepository} from "../mixins/repository/CommentRepository";
   import CommentCreate from "./CommentCreate";
-  import Vue from "vue";
 
 
   export default {
@@ -69,13 +68,27 @@
         showCreateComment: false
       };
     },
-    computed: {},
+    computed: {
+      ...mapGetters('user', {
+        isAuthenticated: 'isAuthenticated'
+      }),
+      createCommentPlaceholder() {
+        return this.isAuthenticated ? 'Написать комментарий...' : 'Необходимо зарегистрироваться';
+      }
+    },
     methods: {
       fetchComments() {
         this.apiFetchComments(this.postId, data => {
           this.comments = data;
         });
-      }
+      },
+      tryCreateComment() {
+        if (!this.isAuthenticated) {
+          this.$router.push("/registration");
+        } else {
+          this.showCreateComment = true;
+        }
+      },
     },
     watch: {
       postId() {
